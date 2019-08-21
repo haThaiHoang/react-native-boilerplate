@@ -1,0 +1,46 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "jest": true,
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "react/sort-comp": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "global-require": 0,
+    "object-curly-newline": 0,
+    "jsx-a11y/href-no-hash": "off",
+    "max-len": ["error", { "code": 120 }],
+    "quote-props": 0,
+    "no-void": 0,
+    "comma-dangle": ["error", "never"],
+    "semi": ["error", "never"],
+    "no-console": 1,
+    "no-param-reassign": 0,
+    "class-methods-use-this": 0,
+    "arrow-body-style": ["error", "as-needed"],
+    "dot-notation": ["error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" }],
+    "no-unused-expressions": ["error", {
+      "allowTaggedTemplates": true
+    }],
+    "no-underscore-dangle": ["error", {
+      "allowAfterThis": true,
+      "allowAfterSuper": true
+    }],
+    "func-names": ["error", "never"],
+    "import/prefer-default-export": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "react/jsx-filename-extension": 0,
+    "react/forbid-prop-types": 0,
+    "react/no-array-index-key": 0
+  },
+  "globals": {
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  }
+}
