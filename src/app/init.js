@@ -1,9 +1,12 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
+import { StatusBar, BackHandler } from 'react-native'
 import { connect } from 'react-redux'
 import { withLocalize } from 'react-localize-redux'
 import AsyncStorage from '@react-native-community/async-storage'
+import { NavigationActions } from 'react-navigation'
 import * as Yup from 'yup'
 
+import { Colors } from '@/theme'
 import Request from '@/utils/request'
 import errorMessagesVN from '@/languages/error-messages/vn.json'
 import validationVN from '@/languages/validation/vn.json'
@@ -18,7 +21,9 @@ Yup.setLocale({
 })
 
 @withLocalize
-@connect(null)
+@connect((state) => ({
+  navigation: state.navigation
+}))
 
 class Init extends Component {
   constructor(props) {
@@ -42,8 +47,34 @@ class Init extends Component {
     })
   }
 
+  _onBackPress = () => {
+    const { dispatch, navigation } = this.props
+    if (navigation.index === 0) {
+      return false
+    }
+
+    dispatch(NavigationActions.back())
+    return true
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this._onBackPress)
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this._onBackPress)
+  }
+
   render() {
-    return null
+    return (
+      <StatusBar
+        hidden
+        animated
+        translucent
+        backgroundColor={Colors.setAlpha('black', 0.2)}
+        barStyle="light-content"
+      />
+    )
   }
 }
 

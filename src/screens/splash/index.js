@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { StatusBar, Text, View } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import styles from './styles'
@@ -19,10 +19,12 @@ class Splash extends Component {
         if (accessToken) {
           navigation.navigate('Main')
         } else navigation.navigate('Auth')
+        StatusBar.setHidden(false)
       }, 2000)
     } catch (e) {
       // eslint-disable-next-line
       console.error('Get AccessToken failed')
+      StatusBar.setHidden(false)
     }
   }
 

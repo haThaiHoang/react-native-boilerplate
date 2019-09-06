@@ -4,7 +4,8 @@ export default [
   // API
   'LOGIN',
 
-  'GET_DOCTORS'
+  'GET_DOCTORS',
 
   // Store
+  'CLEAR_STORE'
 ]
