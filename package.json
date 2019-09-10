@@ -4,7 +4,7 @@
   "author": "hoanght",
   "private": true,
   "scripts": {
-    "android": "react-native run-android --no-jetifier",
+    "android": "react-native run-android",
     "android:release": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "ios:ip7": "react-native run-ios --simulator='iPhone 7'",
