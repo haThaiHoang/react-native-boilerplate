@@ -28,7 +28,7 @@ class Home extends Component {
   componentDidMount() {
     const { getDoctors } = this.props
 
-    getDoctors()
+    // getDoctors()
   }
 
   _onRefresh = () => {

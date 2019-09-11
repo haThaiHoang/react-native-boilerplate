@@ -1,8 +1,8 @@
 import {
-  createSwitchNavigator,
-  createStackNavigator,
-  createBottomTabNavigator
+  createSwitchNavigator
 } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createReduxContainer } from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 
@@ -36,6 +36,6 @@ export const RootNavigator = createSwitchNavigator({
   initialRouteName: 'Splash'
 })
 
-export default connect(state => ({
+export default connect((state) => ({
   state: state.navigation
 }))(createReduxContainer(RootNavigator))
