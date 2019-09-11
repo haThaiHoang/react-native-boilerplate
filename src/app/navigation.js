@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createReduxContainer } from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 
-import Splash from '@/screens/splash'
 import Login from '@/screens/auth/login'
 import Home from '@/screens/home'
 import Settings from '@/screens/settings'
@@ -29,11 +28,10 @@ const AuthNavigator = createStackNavigator({
 })
 
 export const RootNavigator = createSwitchNavigator({
-  Splash,
   Auth: AuthNavigator,
   Main: MainNavigator
 }, {
-  initialRouteName: 'Splash'
+  initialRouteName: 'Auth'
 })
 
 export default connect((state) => ({

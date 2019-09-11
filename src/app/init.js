@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { withLocalize } from 'react-localize-redux'
 import AsyncStorage from '@react-native-community/async-storage'
 import { NavigationActions } from 'react-navigation'
+import SplashScreen from 'react-native-splash-screen'
 import * as Yup from 'yup'
 
 import { Colors } from '@/theme'
@@ -58,6 +59,7 @@ class Init extends Component {
   }
 
   componentDidMount() {
+    SplashScreen.hide()
     BackHandler.addEventListener('hardwareBackPress', this._onBackPress)
   }
 
@@ -68,7 +70,6 @@ class Init extends Component {
   render() {
     return (
       <StatusBar
-        hidden
         animated
         translucent
         backgroundColor={Colors.setAlpha('black', 0.2)}
