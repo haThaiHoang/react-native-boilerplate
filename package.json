@@ -6,6 +6,7 @@
   "scripts": {
     "android": "react-native run-android",
     "android:release": "react-native run-android --variant=release",
+    "build:android": "cd android && ./gradlew assembleRelease",
     "ios": "react-native run-ios",
     "ios:ip7": "react-native run-ios --simulator='iPhone 7'",
     "start": "react-native start",

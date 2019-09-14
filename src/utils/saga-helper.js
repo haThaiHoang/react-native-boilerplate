@@ -2,7 +2,8 @@ import { NavigationActions } from 'react-navigation'
 import { put, select } from 'redux-saga/effects'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import Notification from '@/utils/notification'
+import Notification from '@/components/notification'
+import Misc from '@/utils/misc'
 import { actions } from '@/store/actions'
 
 export default function sagaHelper({ api, successMessage, errorHandler }) {
@@ -14,37 +15,34 @@ export default function sagaHelper({ api, successMessage, errorHandler }) {
     try {
       yield put({ type: requestType, payload: data })
 
-      const { success, result } = yield api(data)
+      const result = yield api(data)
 
-      if (success) {
-        yield put({ type: successType, data: result, payload: data })
+      yield put({ type: successType, data: result, payload: data })
 
-        if (successMessage) Notification.success(successMessage)
+      if (successMessage) Notification.success(successMessage)
 
-        if (callback) callback(successType, result)
-      } else {
-        throw result
-      }
+      if (callback) callback(successType, result)
     } catch (e) {
-      yield put({ type: failureType, error: e })
+      const error = yield Misc.getErrorJsonBody(e)
+      yield put({ type: failureType, error })
 
       const localize = yield select((state) => state.localize)
       const languageIndex = localize.languages[0].active ? 0 : 1
       const getLocalizeErrorMessages = (name) => (localize.translations[`error-messages.${name}`] || [])[languageIndex]
 
-      if (['TOKEN_EXPIRED'].includes(e.name)) {
+      if (['TOKEN_EXPIRED'].includes(error.name)) {
         yield AsyncStorage.removeItem('ACCESS_TOKEN')
         yield put(NavigationActions.navigate({ routeName: 'Login' }))
         yield put(actions.clearStore())
       }
 
       if (errorHandler) {
-        errorHandler(e, getLocalizeErrorMessages)
+        errorHandler(error, getLocalizeErrorMessages)
       } else {
-        Notification.error(getLocalizeErrorMessages(e.name) || e)
+        Notification.error(getLocalizeErrorMessages(error.name) || error.name)
       }
 
-      if (callback) callback(failureType, e)
+      if (callback) callback(failureType, error)
     }
   }
 }

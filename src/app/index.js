@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Store from '@/store'
 import Init from './init'
+import Store from '@/store'
 import Navigation from './navigation'
 
 export default () => (

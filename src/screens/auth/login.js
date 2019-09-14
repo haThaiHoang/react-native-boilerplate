@@ -1,15 +1,31 @@
 import React, { Component } from 'react'
-import { ImageBackground, View, StatusBar } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
+import { View, StatusBar, StyleSheet } from 'react-native'
+// import AsyncStorage from '@react-native-community/async-storage'
 import { withLocalize } from 'react-localize-redux'
 import { connect } from 'react-redux'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 import { Button, Input, Field } from '@/components'
-import { Colors, Images } from '@/theme'
+import { Colors } from '@/theme'
 import { TYPES, actions } from '@/store/actions'
-import styles from './styles'
+
+const styles = StyleSheet.create({
+  form: {
+    width: '100%',
+    paddingHorizontal: 10
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'gray'
+  },
+  loginButton: {
+    marginBottom: 10
+  }
+})
+
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required(),
@@ -17,7 +33,7 @@ const validationSchema = Yup.object().shape({
 })
 
 @withLocalize
-@connect(state => ({
+@connect((state) => ({
   authStore: state.auth
 }), {
   login: actions.login
@@ -77,13 +93,10 @@ class Login extends Component {
 
   render() {
     return (
-      <ImageBackground
-        style={styles.background}
-        source={Images.AUTH_BACKGROUND}
-        blurRadius={1}
+      <View
+        style={styles.container}
       >
         <StatusBar barStyle="light-content" />
-        <View style={styles.mask} />
         <Formik
           validateOnChange={false}
           validateOnBlur={false}
@@ -91,7 +104,7 @@ class Login extends Component {
           onSubmit={this._onSubmit}
           component={this._renderForm}
         />
-      </ImageBackground>
+      </View>
     )
   }
 }
