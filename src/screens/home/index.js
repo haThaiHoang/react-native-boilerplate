@@ -58,7 +58,7 @@ class Home extends Component {
 
     return (
       <Container>
-        <Toolbar title="Trang chủ" />
+        <Toolbar title="Home" />
         <FlatList
           contentContainerStyle={{ paddingBottom: 10 }}
           refreshing={doctorsStore.submitting === TYPES.GET_DOCTORS_REQUEST}

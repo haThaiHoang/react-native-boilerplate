@@ -9,8 +9,8 @@ import * as Yup from 'yup'
 
 import { Colors } from '@/theme'
 import Request from '@/utils/request'
-import errorMessagesVN from '@/languages/error-messages/vn.json'
-import validationVN from '@/languages/validation/vn.json'
+import errorMessagesEN from '@/languages/error-messages/en.json'
+import validationEN from '@/languages/validation/en.json'
 
 Yup.setLocale({
   mixed: {
@@ -33,15 +33,15 @@ class Init extends Component {
 
     initialize({
       languages: [{
-        name: 'Vietnam',
-        code: 'vn'
+        name: 'English',
+        code: 'en'
       }],
       options: {
         renderToStaticMarkup: false
       }
     })
-    add(errorMessagesVN, 'vn')
-    add(validationVN, 'vn')
+    add(errorMessagesEN, 'en')
+    add(validationEN, 'en')
 
     AsyncStorage.getItem('ACCESS_TOKEN').then((token) => {
       Request.setAccessToken(token)

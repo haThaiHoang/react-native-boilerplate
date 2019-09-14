@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { Container, Button, Icon, Toolbar } from '@/components'
@@ -25,7 +24,7 @@ class Settings extends Component {
   render() {
     return (
       <Container>
-        <Toolbar title="Cài đặt" />
+        <Toolbar title="Settings" />
         <Button
           text="Logout"
           onPress={this._onLogOut}

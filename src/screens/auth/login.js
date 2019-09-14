@@ -65,14 +65,14 @@ class Login extends Component {
         <Field
           form={form}
           name="username"
-          label="Tài khoản"
+          label="Username"
           component={Input}
         />
         <Field
           form={form}
           secureTextEntry
           name="password"
-          label="Mật khẩu"
+          label="Password"
           type="password"
           component={Input}
         />
@@ -81,11 +81,7 @@ class Login extends Component {
           style={styles.loginButton}
           onPress={handleSubmit}
           background={Colors.PRIMARY_900}
-          text="Đăng nhập"
-        />
-        <Button
-          background={Colors.ORANGE_700}
-          text="Đăng ký"
+          text="Login"
         />
       </View>
     )
