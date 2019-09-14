@@ -1,14 +1,39 @@
 import React, { Component } from 'react'
-import { FlatList, Text, View, Image } from 'react-native'
+import { FlatList, Text, View, Image, StyleSheet } from 'react-native'
 import { withLocalize } from 'react-localize-redux'
 import { connect } from 'react-redux'
 
 import { Container, Icon, Toolbar } from '@/components'
 import { TYPES, actions } from '@/store/actions'
-import styles from './styles'
+
+const styles = StyleSheet.create({
+  list: {
+    padding: 10
+  },
+  itemBox: {
+    padding: 10,
+    flexDirection: 'row',
+    marginBottom: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: 4
+  },
+  avatar: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    marginRight: 20
+  },
+  infoBox: {
+    justifyContent: 'center'
+  },
+  loadingBox: {
+    paddingTop: 20
+  }
+})
+
 
 @withLocalize
-@connect(state => ({
+@connect((state) => ({
   doctorsStore: state.doctors
 }), {
   getDoctors: actions.getDoctors
@@ -26,7 +51,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const { getDoctors } = this.props
+    // const { getDoctors } = this.props
 
     // getDoctors()
   }
