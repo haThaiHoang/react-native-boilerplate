@@ -1,12 +1,13 @@
 import React from 'react'
-import { View, StyleSheet, Text, StatusBar, Platform } from 'react-native'
+import { View, StyleSheet, Text, Platform } from 'react-native'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { Colors } from '@/theme'
 
 const styles = StyleSheet.create({
   container: {
     zIndex: 1,
-    paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+    paddingTop: getStatusBarHeight(),
     backgroundColor: Colors.PRIMARY_700
   },
   content: {
