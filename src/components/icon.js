@@ -34,7 +34,7 @@ const iconMaps = [{
 }]
 
 const Icon = ({ name, size, color, style, ...props }) => {
-  const { code } = iconMaps.find(icon => icon.name === name) || {}
+  const { code } = iconMaps.find((icon) => icon.name === name) || {}
 
   return (
     <Text

@@ -8,7 +8,7 @@
     "android:release": "react-native run-android --variant=release",
     "build:android": "cd android && ./gradlew assembleRelease",
     "ios": "react-native run-ios",
-    "ios:ip7": "react-native run-ios --simulator='iPhone 7'",
+    "ios:ip6": "react-native run-ios --simulator='iPhone 6'",
     "start": "react-native start",
     "start:rc": "react-native start --reset-cache",
     "test": "jest",
