@@ -35,7 +35,7 @@ export default class Misc {
 
   static getErrorJsonBody = async (error) => {
     if (isFetchError(error)) {
-      error = await getFetchError(error)
+      error = (await getFetchError(error)) || error
     }
 
     return error

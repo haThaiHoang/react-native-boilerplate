@@ -39,7 +39,7 @@ export default function sagaHelper({ api, successMessage, errorHandler }) {
       if (errorHandler) {
         errorHandler(error, getLocalizeErrorMessages)
       } else {
-        Notification.error(getLocalizeErrorMessages(error.name) || error.name)
+        Notification.error(getLocalizeErrorMessages(error.name) || error.name || `Error code: ${error.status}`)
       }
 
       if (callback) callback(failureType, error)
