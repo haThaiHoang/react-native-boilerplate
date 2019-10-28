@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, StatusBar, StyleSheet } from 'react-native'
-// import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage'
 import { withLocalize } from 'react-localize-redux'
 import { connect } from 'react-redux'
 import { Formik } from 'formik'
@@ -47,12 +47,12 @@ class Login extends Component {
   _onSubmit = (values) => {
     const { navigation, login } = this.props
 
-    // login(values, async (action, data) => {
-    //   if (action === TYPES.LOGIN_SUCCESS) {
-    //     navigation.navigate('Main')
-    //     await AsyncStorage.setItem('ACCESS_TOKEN', data.accessToken)
-    //   }
-    // })
+    login(values, async (success, data) => {
+      if (success) {
+        navigation.navigate('Main')
+        await AsyncStorage.setItem('ACCESS_TOKEN', data.accessToken)
+      }
+    })
 
     navigation.navigate('Main')
   }
