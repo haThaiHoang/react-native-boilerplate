@@ -3,9 +3,9 @@ import Config from '@/configs/develop.json'
 
 const endpoint = `${Config.API_URL}`
 
-const TokenApi = Request.create({
+const MainApi = Request.create({
   endpoint,
   handleToken: true
 })
 
-export { TokenApi }
+export { MainApi }

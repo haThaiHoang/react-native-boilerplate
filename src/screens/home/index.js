@@ -87,7 +87,7 @@ class Home extends Component {
         <FlatList
           contentContainerStyle={{ paddingBottom: 10 }}
           refreshing={doctorsStore.submitting === TYPES.GET_DOCTORS_REQUEST}
-          onRefresh={this._onRefresh}
+          // onRefresh={this._onRefresh}
           keyExtractor={this._keyExtractor}
           style={styles.list}
           data={doctorsStore.doctors}

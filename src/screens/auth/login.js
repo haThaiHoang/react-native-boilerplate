@@ -50,11 +50,9 @@ class Login extends Component {
     login(values, async (success, data) => {
       if (success) {
         navigation.navigate('Main')
-        await AsyncStorage.setItem('ACCESS_TOKEN', data.accessToken)
+        await AsyncStorage.setItem('ACCESS_TOKEN', data.token)
       }
     })
-
-    navigation.navigate('Main')
   }
 
   _renderForm = ({ handleSubmit, ...form }) => {

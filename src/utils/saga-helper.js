@@ -15,13 +15,17 @@ export default function sagaHelper({ api, successMessage, errorHandler }) {
     try {
       yield put({ type: requestType, payload: data })
 
-      const result = yield api(data)
+      const { success, result } = yield api(data)
 
-      yield put({ type: successType, data: result, payload: data })
+      if (success) {
+        yield put({ type: successType, data: result, payload: data })
 
-      if (successMessage) Notification.success(successMessage)
+        if (successMessage) Notification.success(successMessage)
 
-      if (callback) callback(true, result)
+        if (callback) callback(true, result)
+      } else {
+        throw result
+      }
     } catch (e) {
       const error = yield Misc.getErrorJsonBody(e)
       yield put({ type: failureType, error })
