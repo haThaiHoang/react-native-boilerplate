@@ -3,15 +3,13 @@ import { View, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15
-  },
-  full: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white'
   }
 })
 
-export default ({ children, full }) => (
-  <View style={[styles.container, full && styles.full]}>
+export default ({ children }) => (
+  <View style={styles.container}>
     {children}
   </View>
 )

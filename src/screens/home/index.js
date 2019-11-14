@@ -3,14 +3,14 @@ import { FlatList, Text, View, Image, StyleSheet } from 'react-native'
 import { withLocalize } from 'react-localize-redux'
 import { connect } from 'react-redux'
 
-import Container from '@/components/container'
+import Screen from '@/components/screen'
 import Icon from '@/components/icon'
 import Toolbar from '@/components/toolbar'
 import { TYPES, actions } from '@/store/actions'
 
 const styles = StyleSheet.create({
   list: {
-    padding: 10
+    padding: 15
   },
   itemBox: {
     padding: 10,
@@ -79,10 +79,10 @@ class Home extends Component {
     const { productsStore } = this.props
 
     return (
-      <Container>
+      <Screen>
         <Toolbar title="Products" />
         <FlatList
-          contentContainerStyle={{ paddingBottom: 10 }}
+          contentContainerStyle={{ paddingBottom: 15 }}
           refreshing={productsStore.submitting === TYPES.GET_PRODUCTS_REQUEST}
           onRefresh={this._onFetchData}
           keyExtractor={(item, index) => index.toString()}
@@ -90,7 +90,7 @@ class Home extends Component {
           data={productsStore.products}
           renderItem={this._renderItem}
         />
-      </Container>
+      </Screen>
     )
   }
 }

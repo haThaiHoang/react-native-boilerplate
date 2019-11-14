@@ -4,6 +4,7 @@ import { withLocalize } from 'react-localize-redux'
 import { connect } from 'react-redux'
 
 import Container from '@/components/container'
+import Screen from '@/components/screen'
 import Button from '@/components/button'
 import Icon from '@/components/icon'
 import Toolbar from '@/components/toolbar'
@@ -35,13 +36,15 @@ class Settings extends Component {
 
   render() {
     return (
-      <Container>
+      <Screen>
         <Toolbar title="Settings" />
-        <Button
-          text="Logout"
-          onPress={this._onLogOut}
-        />
-      </Container>
+        <Container>
+          <Button
+            text="Logout"
+            onPress={this._onLogOut}
+          />
+        </Container>
+      </Screen>
     )
   }
 }

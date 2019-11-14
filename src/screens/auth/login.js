@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
+import Screen from '@/components/screen'
+import Container from '@/components/container'
 import Button from '@/components/button'
 import Input from '@/components/input'
 import Field from '@/components/field'
@@ -14,11 +16,7 @@ import { TYPES, actions } from '@/store/actions'
 const styles = StyleSheet.create({
   form: {
     width: '100%',
-    paddingHorizontal: 10
-  },
-  container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center'
   },
   loginButton: {
@@ -91,18 +89,18 @@ class Login extends Component {
 
   render() {
     return (
-      <View
-        style={styles.container}
-      >
-        <StatusBar barStyle="light-content" />
-        <Formik
-          validateOnChange={false}
-          validateOnBlur={false}
-          validationSchema={validationSchema}
-          onSubmit={this._onSubmit}
-          component={this._renderForm}
-        />
-      </View>
+      <Screen>
+        <StatusBar barStyle="dark-content" />
+        <Container full>
+          <Formik
+            validateOnChange={false}
+            validateOnBlur={false}
+            validationSchema={validationSchema}
+            onSubmit={this._onSubmit}
+            component={this._renderForm}
+          />
+        </Container>
+      </Screen>
     )
   }
 }
