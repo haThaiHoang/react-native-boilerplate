@@ -15,7 +15,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/async-storage": "1.6.2",
+    "@react-native-community/async-storage": "1.6.3",
     "formik": "1.5.8",
     "lodash": "4.17.15",
     "moment": "2.24.0",
