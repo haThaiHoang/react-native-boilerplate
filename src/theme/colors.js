@@ -28,7 +28,4 @@ export const PINK_500 = '#E91E63'
 export const PINK_700 = '#C2185B'
 export const PINK_900 = '#880E4F'
 
-export const PRIMARY_200 = GREEN_200
-export const PRIMARY_500 = GREEN_500
-export const PRIMARY_700 = GREEN_700
-export const PRIMARY_900 = GREEN_900
+export const PRIMARY = GREEN_700

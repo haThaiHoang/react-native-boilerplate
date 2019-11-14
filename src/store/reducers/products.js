@@ -5,23 +5,23 @@ const INIT_STATE = {
   submitting: null,
   error: null,
 
-  doctors: []
+  products: []
 }
 
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
-    case TYPES.GET_DOCTORS_REQUEST:
+    case TYPES.GET_PRODUCTS_REQUEST:
       return {
         ...state,
         submitting: action.type
       }
-    case TYPES.GET_DOCTORS_SUCCESS:
+    case TYPES.GET_PRODUCTS_SUCCESS:
       return {
         ...state,
         submitting: null,
-        doctors: action.data
+        products: action.data
       }
-    case TYPES.GET_DOCTORS_FAILURE:
+    case TYPES.GET_PRODUCTS_FAILURE:
       return {
         ...state,
         submitting: null,

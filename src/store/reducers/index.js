@@ -5,13 +5,13 @@ import { createNavigationReducer } from 'react-navigation-redux-helpers'
 import { RootNavigator } from '@/app/navigation'
 import { TYPES } from '@/store/actions'
 import auth from './auth'
-import doctors from './doctors'
+import products from './products'
 
 const appReducer = combineReducers({
   navigation: createNavigationReducer(RootNavigator),
   localize: localizeReducer,
   auth,
-  doctors
+  products
 })
 
 export default (state, action) => {

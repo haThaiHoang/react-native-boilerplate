@@ -9,6 +9,8 @@ const styles = {
   marginBottom: 5,
   height: 50,
   paddingHorizontal: 12,
+  borderWidth: 1,
+  borderColor: 'black',
   fontSize: FontSizes.NORMAL
 }
 

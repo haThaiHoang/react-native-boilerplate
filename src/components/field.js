@@ -6,10 +6,8 @@ import { Field } from 'formik'
 
 const styles = StyleSheet.create({
   field: {
-
   },
   label: {
-    color: 'white',
     marginBottom: 5
   },
   error: {

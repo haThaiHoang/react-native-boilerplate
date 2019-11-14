@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
+import { withLocalize } from 'react-localize-redux'
+import { connect } from 'react-redux'
 
-import { Container, Button, Icon, Toolbar } from '@/components'
+import Container from '@/components/container'
+import Button from '@/components/button'
+import Icon from '@/components/icon'
+import Toolbar from '@/components/toolbar'
+import { actions } from '@/store/actions'
+
+@withLocalize
+@connect(null, {
+  clearStore: actions.clearStore
+})
 
 class Settings extends Component {
   static navigationOptions = {
@@ -15,10 +26,11 @@ class Settings extends Component {
   }
 
   _onLogOut = async () => {
-    const { navigation } = this.props
+    const { navigation, clearStore } = this.props
 
     await AsyncStorage.removeItem('ACCESS_TOKEN')
     navigation.navigate('Login')
+    clearStore()
   }
 
   render() {

@@ -6,8 +6,9 @@ import { connect } from 'react-redux'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
-import { Button, Input, Field } from '@/components'
-import { Colors } from '@/theme'
+import Button from '@/components/button'
+import Input from '@/components/input'
+import Field from '@/components/field'
 import { TYPES, actions } from '@/store/actions'
 
 const styles = StyleSheet.create({
@@ -18,11 +19,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'gray'
+    justifyContent: 'center'
   },
   loginButton: {
     marginBottom: 10
+  },
+  fieldGroup: {
+    paddingBottom: 10
   }
 })
 
@@ -60,25 +63,26 @@ class Login extends Component {
 
     return (
       <View style={styles.form}>
-        <Field
-          form={form}
-          name="username"
-          label="Username"
-          component={Input}
-        />
-        <Field
-          form={form}
-          secureTextEntry
-          name="password"
-          label="Password"
-          type="password"
-          component={Input}
-        />
+        <View style={styles.fieldGroup}>
+          <Field
+            form={form}
+            name="username"
+            label="Username"
+            component={Input}
+          />
+          <Field
+            form={form}
+            secureTextEntry
+            name="password"
+            label="Password"
+            type="password"
+            component={Input}
+          />
+        </View>
         <Button
           loading={authStore.submitting === TYPES.LOGIN_REQUEST}
           style={styles.loginButton}
           onPress={handleSubmit}
-          background={Colors.PRIMARY_900}
           text="Login"
         />
       </View>

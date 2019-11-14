@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   container: {
     zIndex: 1,
     paddingTop: getStatusBarHeight(),
-    backgroundColor: Colors.PRIMARY_700
+    backgroundColor: Colors.PRIMARY
   },
   content: {
     height: 55,

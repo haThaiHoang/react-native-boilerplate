@@ -3,7 +3,9 @@ import { FlatList, Text, View, Image, StyleSheet } from 'react-native'
 import { withLocalize } from 'react-localize-redux'
 import { connect } from 'react-redux'
 
-import { Container, Icon, Toolbar } from '@/components'
+import Container from '@/components/container'
+import Icon from '@/components/icon'
+import Toolbar from '@/components/toolbar'
 import { TYPES, actions } from '@/store/actions'
 
 const styles = StyleSheet.create({
@@ -34,9 +36,9 @@ const styles = StyleSheet.create({
 
 @withLocalize
 @connect((state) => ({
-  doctorsStore: state.doctors
+  productsStore: state.products
 }), {
-  getDoctors: actions.getDoctors
+  getProducts: actions.getProducts
 })
 
 class Home extends Component {
@@ -51,18 +53,14 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // const { getDoctors } = this.props
-
-    // getDoctors()
+    this._onFetchData()
   }
 
-  _onRefresh = () => {
-    const { getDoctors } = this.props
+  _onFetchData = () => {
+    const { getProducts } = this.props
 
-    getDoctors()
+    getProducts()
   }
-
-  _keyExtractor = (item, index) => index.toString()
 
   _renderItem = ({ item }) => (
     <View style={styles.itemBox}>
@@ -71,27 +69,25 @@ class Home extends Component {
         source={{ uri: item.avatar }}
       />
       <View style={styles.infoBox}>
-        <Text>Tên: {item.name}</Text>
-        <Text>Tuổi: {item.age}</Text>
-        <Text>Địa chỉ: {item.address}</Text>
+        <Text>Name: {item.name}</Text>
+        <Text>Description: {item.description}</Text>
       </View>
     </View>
   )
 
   render() {
-    const { doctorsStore } = this.props
+    const { productsStore } = this.props
 
     return (
       <Container>
-        <Toolbar title="Home" />
+        <Toolbar title="Products" />
         <FlatList
           contentContainerStyle={{ paddingBottom: 10 }}
-          refreshing={doctorsStore.submitting === TYPES.GET_DOCTORS_REQUEST}
-          // onRefresh={this._onRefresh}
-          keyExtractor={this._keyExtractor}
+          refreshing={productsStore.submitting === TYPES.GET_PRODUCTS_REQUEST}
+          onRefresh={this._onFetchData}
+          keyExtractor={(item, index) => index.toString()}
           style={styles.list}
-          data={doctorsStore.doctors}
-          extraData={this.state}
+          data={productsStore.products}
           renderItem={this._renderItem}
         />
       </Container>

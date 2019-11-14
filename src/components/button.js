@@ -1,11 +1,11 @@
 import React from 'react'
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native'
-import tinycolor from 'tinycolor2'
 
-import { FontSizes } from '@/theme'
+import { FontSizes, Colors } from '@/theme'
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Colors.PRIMARY,
     height: 50,
     borderRadius: 3,
     justifyContent: 'center'
@@ -15,22 +15,16 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: FontSizes.NORMAL
-  },
-  textLight: {
+    fontSize: FontSizes.NORMAL,
     color: 'white'
-  },
-  textDark: {
-    color: 'black'
   }
 })
 
-const Button = ({ text, fluid, background, style, loading, ...props }) => {
+const Button = ({ text, fluid, style, loading, ...props }) => {
   style = [
     style,
     styles.container,
-    fluid && styles.fluid,
-    { backgroundColor: background }
+    fluid && styles.fluid
   ]
 
   return (
@@ -38,7 +32,7 @@ const Button = ({ text, fluid, background, style, loading, ...props }) => {
       {loading ? (
         <ActivityIndicator color="#fff" />
       ) : (
-        <Text style={[styles.text, { color: tinycolor(background).isLight() ? 'black' : 'white' }]}>
+        <Text style={styles.text}>
           {text}
         </Text>
       )}
@@ -47,7 +41,6 @@ const Button = ({ text, fluid, background, style, loading, ...props }) => {
 }
 
 Button.defaultProps = {
-  background: 'white',
   fluid: false
 }
 
