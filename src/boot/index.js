@@ -2,11 +2,11 @@ import React from 'react'
 
 import Init from './init'
 import Store from '@/store'
-import Navigation from './navigation'
+import Navigators from '@/navigators'
 
 export default () => (
   <Store>
     <Init />
-    <Navigation />
+    <Navigators />
   </Store>
 )

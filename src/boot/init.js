@@ -48,6 +48,15 @@ class Init extends Component {
     })
   }
 
+  componentDidMount() {
+    SplashScreen.hide()
+    BackHandler.addEventListener('hardwareBackPress', this._onBackPress)
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this._onBackPress)
+  }
+
   _onBackPress = () => {
     const { dispatch, navigation } = this.props
     if (navigation.index === 0) {
@@ -56,15 +65,6 @@ class Init extends Component {
 
     dispatch(NavigationActions.back())
     return true
-  }
-
-  componentDidMount() {
-    SplashScreen.hide()
-    BackHandler.addEventListener('hardwareBackPress', this._onBackPress)
-  }
-
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this._onBackPress)
   }
 
   render() {

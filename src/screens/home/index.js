@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import Screen from '@/components/screen'
 import Icon from '@/components/icon'
 import Toolbar from '@/components/toolbar'
-import { TYPES, actions } from '@/store/actions'
+import { actions } from '@/store/actions'
 
 const styles = StyleSheet.create({
   list: {
@@ -52,14 +52,26 @@ class Home extends Component {
     )
   }
 
+  state = {
+    refreshing: false
+  }
+
   componentDidMount() {
     this._onFetchData()
   }
 
-  _onFetchData = () => {
+  _onFetchData = (isRefresh) => {
     const { getProducts } = this.props
 
-    getProducts()
+    this.setState({
+      refreshing: !!isRefresh
+    })
+
+    getProducts(null, () => {
+      this.setState({
+        refreshing: false
+      })
+    })
   }
 
   _renderItem = ({ item }) => (
@@ -77,14 +89,15 @@ class Home extends Component {
 
   render() {
     const { productsStore } = this.props
+    const { refreshing } = this.state
 
     return (
       <Screen>
         <Toolbar title="Products" />
         <FlatList
           contentContainerStyle={{ paddingBottom: 15 }}
-          refreshing={productsStore.submitting === TYPES.GET_PRODUCTS_REQUEST}
-          onRefresh={this._onFetchData}
+          refreshing={refreshing}
+          onRefresh={() => this._onFetchData(true)}
           keyExtractor={(item, index) => index.toString()}
           style={styles.list}
           data={productsStore.products}

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { localizeReducer } from 'react-localize-redux'
 import { createNavigationReducer } from 'react-navigation-redux-helpers'
 
-import { RootNavigator } from '@/app/navigation'
+import { RootNavigator } from '@/navigators'
 import { TYPES } from '@/store/actions'
 import auth from './auth'
 import products from './products'
