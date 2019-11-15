@@ -1,13 +1,10 @@
-import React, { Component } from 'react'
-import { StatusBar, BackHandler } from 'react-native'
-import { connect } from 'react-redux'
+import { Component } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
-import { NavigationActions } from 'react-navigation'
 import SplashScreen from 'react-native-splash-screen'
 import * as Yup from 'yup'
 
-import { Colors } from '@/theme'
 import Request from '@/utils/request'
+import navigation from '@/utils/navigation'
 
 Yup.setLocale({
   mixed: {
@@ -18,47 +15,22 @@ Yup.setLocale({
   }
 })
 
-@connect((state) => ({
-  navigation: state.navigation
-}))
-
 class Init extends Component {
-  constructor(props) {
-    super(props)
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem('ACCESS_TOKEN')
 
-    AsyncStorage.getItem('ACCESS_TOKEN').then((token) => {
+    if (token) {
       Request.setAccessToken(token)
-    })
-  }
-
-  componentDidMount() {
-    SplashScreen.hide()
-    BackHandler.addEventListener('hardwareBackPress', this._onBackPress)
-  }
-
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this._onBackPress)
-  }
-
-  _onBackPress = () => {
-    const { dispatch, navigation } = this.props
-    if (navigation.index === 0) {
-      return false
+      navigation.navigate('Main')
+    } else {
+      navigation.navigate('Auth')
     }
 
-    dispatch(NavigationActions.back())
-    return true
+    SplashScreen.hide()
   }
 
   render() {
-    return (
-      <StatusBar
-        animated
-        translucent
-        backgroundColor={Colors.setAlpha('black', 0.2)}
-        barStyle="light-content"
-      />
-    )
+    return null
   }
 }
 

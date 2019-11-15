@@ -11,6 +11,7 @@ import Button from '@/components/button'
 import Input from '@/components/input'
 import Field from '@/components/field'
 import { TYPES, actions } from '@/store/actions'
+import navigation from '@/utils/navigation'
 
 const styles = StyleSheet.create({
   form: {
@@ -40,12 +41,12 @@ const validationSchema = Yup.object().shape({
 
 class Login extends Component {
   _onSubmit = (values) => {
-    const { navigation, login } = this.props
+    const { login } = this.props
 
     login(values, async (success, data) => {
       if (success) {
-        navigation.navigate('Main')
         await AsyncStorage.setItem('ACCESS_TOKEN', data.token)
+        navigation.navigate('Main')
       }
     })
   }

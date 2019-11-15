@@ -1,12 +1,18 @@
 import React from 'react'
+import { StatusBar } from 'react-native'
 
-import Init from './init'
+import { Colors } from '@/theme'
 import Store from '@/store'
 import Navigators from '@/navigators'
 
 export default () => (
   <Store>
-    <Init />
+    <StatusBar
+      animated
+      translucent
+      backgroundColor={Colors.setAlpha('black', 0.2)}
+      barStyle="light-content"
+    />
     <Navigators />
   </Store>
 )

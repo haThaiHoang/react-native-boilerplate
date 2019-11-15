@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import Screen from '@/components/screen'
 import Toolbar from '@/components/toolbar'
+import Loading from '@/components/loading'
 import { actions } from '@/store/actions'
 
 const styles = StyleSheet.create({
@@ -76,6 +77,10 @@ class Home extends Component {
   _renderContent = () => {
     const { productsStore } = this.props
     const { loadingType } = this.state
+
+    if (loadingType === 'init') {
+      return <Loading />
+    }
 
     return (
       <FlatList
