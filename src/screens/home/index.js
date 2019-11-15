@@ -39,23 +39,23 @@ const styles = StyleSheet.create({
 
 class Home extends Component {
   state = {
-    refreshing: false
+    loadingType: null
   }
 
   componentDidMount() {
-    this._onFetchData()
+    this._onFetchData('init')
   }
 
-  _onFetchData = (isRefresh) => {
+  _onFetchData = (loadingType) => {
     const { getProducts } = this.props
 
     this.setState({
-      refreshing: !!isRefresh
+      loadingType
     })
 
     getProducts(null, () => {
       this.setState({
-        refreshing: false
+        loadingType: null
       })
     })
   }
@@ -73,22 +73,28 @@ class Home extends Component {
     </View>
   )
 
-  render() {
+  _renderContent = () => {
     const { productsStore } = this.props
-    const { refreshing } = this.state
+    const { loadingType } = this.state
 
+    return (
+      <FlatList
+        refreshing={loadingType === 'refresh'}
+        onRefresh={() => this._onFetchData('refresh')}
+        keyExtractor={(item, index) => index.toString()}
+        style={styles.list}
+        contentContainerStyle={{ paddingBottom: 15 }}
+        data={productsStore.products}
+        renderItem={this._renderItem}
+      />
+    )
+  }
+
+  render() {
     return (
       <Screen>
         <Toolbar title="Products" />
-        <FlatList
-          contentContainerStyle={{ paddingBottom: 15 }}
-          refreshing={refreshing}
-          onRefresh={() => this._onFetchData(true)}
-          keyExtractor={(item, index) => index.toString()}
-          style={styles.list}
-          data={productsStore.products}
-          renderItem={this._renderItem}
-        />
+        {this._renderContent()}
       </Screen>
     )
   }

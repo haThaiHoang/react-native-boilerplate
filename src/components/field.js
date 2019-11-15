@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import lodash from 'lodash'
 import { Field } from 'formik'
 
 const styles = StyleSheet.create({
