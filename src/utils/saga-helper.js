@@ -1,4 +1,3 @@
-import { NavigationActions } from 'react-navigation'
 import { put, select } from 'redux-saga/effects'
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -36,7 +35,6 @@ export default function sagaHelper({ api, successMessage, errorHandler }) {
 
       if (['TOKEN_EXPIRED'].includes(error.name)) {
         yield AsyncStorage.removeItem('ACCESS_TOKEN')
-        yield put(NavigationActions.navigate({ routeName: 'Login' }))
         yield put(actions.clearStore())
       }
 
