@@ -79,9 +79,9 @@ export default function createIconSetFromIcoMoon(
   fontFile
 ) {
   const glyphMap = {}
-  config.iconSets[0].selection.forEach((icon) => {
-    icon.name.split(/\s*,\s*/g).forEach((name) => {
-      glyphMap[name] = icon.code
+  config.icons.forEach((icon) => {
+    icon.properties.name.split(/\s*,\s*/g).forEach((name) => {
+      glyphMap[name] = icon.properties.code
     })
   })
 
