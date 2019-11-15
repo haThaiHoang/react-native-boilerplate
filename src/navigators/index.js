@@ -29,7 +29,7 @@ const BottomTabNavigator = createBottomTabNavigator({
     // let tabBarLabel
     switch (navigation.state.routeName) {
       case 'Home':
-        iconName = 'block'
+        iconName = 'home'
         break
       case 'Settings':
         iconName = 'cog'
