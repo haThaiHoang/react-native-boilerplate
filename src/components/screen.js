@@ -2,14 +2,19 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5
   }
 })
 
 export default ({ children }) => (
-  <View style={styles.container}>
+  <View style={styles.screen}>
     {children}
   </View>
 )

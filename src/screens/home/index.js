@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { FlatList, Text, View, Image, StyleSheet } from 'react-native'
-import { withLocalize } from 'react-localize-redux'
 import { connect } from 'react-redux'
 
 import Screen from '@/components/screen'
-import Icon from '@/components/icon'
 import Toolbar from '@/components/toolbar'
 import { actions } from '@/store/actions'
 
@@ -33,8 +31,6 @@ const styles = StyleSheet.create({
   }
 })
 
-
-@withLocalize
 @connect((state) => ({
   productsStore: state.products
 }), {
@@ -42,16 +38,6 @@ const styles = StyleSheet.create({
 })
 
 class Home extends Component {
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <Icon
-        name="block"
-        color={tintColor}
-        size={26}
-      />
-    )
-  }
-
   state = {
     refreshing: false
   }

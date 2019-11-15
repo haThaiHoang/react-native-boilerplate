@@ -1,7 +1,6 @@
 import React from 'react'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
-import { LocalizeProvider } from 'react-localize-redux'
 import createSagaMiddleware from 'redux-saga'
 
 import rootReducer from './reducers'
@@ -24,8 +23,6 @@ sagaMiddleware.run(sagas)
 
 export default ({ children }) => (
   <Provider store={store}>
-    <LocalizeProvider store={store}>
-      {children}
-    </LocalizeProvider>
+    {children}
   </Provider>
 )

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, StatusBar, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
-import { withLocalize } from 'react-localize-redux'
 import { connect } from 'react-redux'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -33,7 +32,6 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required()
 })
 
-@withLocalize
 @connect((state) => ({
   authStore: state.auth
 }), {
@@ -41,10 +39,6 @@ const validationSchema = Yup.object().shape({
 })
 
 class Login extends Component {
-  static navigationOptions = {
-    header: null
-  }
-
   _onSubmit = (values) => {
     const { navigation, login } = this.props
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { StatusBar, BackHandler } from 'react-native'
 import { connect } from 'react-redux'
-import { withLocalize } from 'react-localize-redux'
 import AsyncStorage from '@react-native-community/async-storage'
 import { NavigationActions } from 'react-navigation'
 import SplashScreen from 'react-native-splash-screen'
@@ -9,8 +8,6 @@ import * as Yup from 'yup'
 
 import { Colors } from '@/theme'
 import Request from '@/utils/request'
-import errorMessagesEN from '@/languages/error-messages/en.json'
-import validationEN from '@/languages/validation/en.json'
 
 Yup.setLocale({
   mixed: {
@@ -21,7 +18,6 @@ Yup.setLocale({
   }
 })
 
-@withLocalize
 @connect((state) => ({
   navigation: state.navigation
 }))
@@ -29,19 +25,6 @@ Yup.setLocale({
 class Init extends Component {
   constructor(props) {
     super(props)
-    const { initialize, addTranslationForLanguage: add } = props
-
-    initialize({
-      languages: [{
-        name: 'English',
-        code: 'en'
-      }],
-      options: {
-        renderToStaticMarkup: false
-      }
-    })
-    add(errorMessagesEN, 'en')
-    add(validationEN, 'en')
 
     AsyncStorage.getItem('ACCESS_TOKEN').then((token) => {
       Request.setAccessToken(token)
