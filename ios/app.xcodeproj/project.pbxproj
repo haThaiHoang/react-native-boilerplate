@@ -20,6 +20,8 @@
 		ED3F56D1D29AACDD8546E961 /* libPods-app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 171875013FF52976E76511A9 /* libPods-app.a */; };
 		FDCA9467931802D3E5EC34A8 /* libPods-appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22395EC61E7DCD8C1E86AFDE /* libPods-appTests.a */; };
 		0423196F84A84203B2A661FD /* Icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63FC5818A7F14F1AA1E37D99 /* Icomoon.ttf */; };
+		332BEE1827A04E3CA3B9CF3C /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2548652B459D476AA2EAE1FE /* icomoon.ttf */; };
+		C378F27ABE5248249EA598AD /* icosmoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E8F6A76705C479DBB10919C /* icosmoon.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,8 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		63FC5818A7F14F1AA1E37D99 /* Icomoon.ttf */ = {isa = PBXFileReference; name = "Icomoon.ttf"; path = "../src/resources/fonts/Icomoon.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2548652B459D476AA2EAE1FE /* icomoon.ttf */ = {isa = PBXFileReference; name = "icomoon.ttf"; path = "../src/resources/fonts/icomoon.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3E8F6A76705C479DBB10919C /* icosmoon.ttf */ = {isa = PBXFileReference; name = "icosmoon.ttf"; path = "../src/resources/fonts/icosmoon.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +208,8 @@
 			isa = "PBXGroup";
 			children = (
 				63FC5818A7F14F1AA1E37D99 /* Icomoon.ttf */,
+				2548652B459D476AA2EAE1FE /* icomoon.ttf */,
+				3E8F6A76705C479DBB10919C /* icosmoon.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -350,6 +356,8 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				0423196F84A84203B2A661FD /* Icomoon.ttf in Resources */,
+				332BEE1827A04E3CA3B9CF3C /* icomoon.ttf in Resources */,
+				C378F27ABE5248249EA598AD /* icosmoon.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

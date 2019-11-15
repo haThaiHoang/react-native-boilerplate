@@ -55,7 +55,8 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Icomoon.ttf</string>
+		<string>icomoon.ttf</string>
+		<string>icosmoon.ttf</string>
 	</array>
 </dict>
 </plist>
