@@ -54,6 +54,8 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>UIAppFonts</key>
-	<array/>
+	<array>
+		<string>icomoon.ttf</string>
+	</array>
 </dict>
 </plist>
