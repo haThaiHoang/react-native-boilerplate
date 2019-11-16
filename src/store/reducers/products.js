@@ -5,7 +5,10 @@ const INIT_STATE = {
   submitting: null,
   error: null,
 
-  products: []
+  products: {
+    items: [],
+    total: 0
+  }
 }
 
 export default (state = INIT_STATE, action) => {
@@ -19,7 +22,10 @@ export default (state = INIT_STATE, action) => {
       return {
         ...state,
         submitting: null,
-        products: action.data
+        products: {
+          items: action.payload.merge ? state.products.items.concat(action.data.items) : action.data.items,
+          total: action.data.total
+        }
       }
     case TYPES.GET_PRODUCTS_FAILURE:
       return {

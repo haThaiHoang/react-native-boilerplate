@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, Text, View, Image, StyleSheet } from 'react-native'
+import { FlatList, Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 
 import Screen from '@/components/screen'
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   itemBox: {
     padding: 10,
     flexDirection: 'row',
-    marginBottom: 10,
+    marginBottom: 15,
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 4
   },
@@ -40,23 +40,31 @@ const styles = StyleSheet.create({
 
 class Home extends Component {
   state = {
-    loadingType: null
+    loadingType: null,
+    page: 0
   }
 
   componentDidMount() {
     this._onFetchData('init')
   }
 
-  _onFetchData = (loadingType) => {
-    const { getProducts } = this.props
+  _onFetchData = (loadingType, merge) => {
+    const { getProducts, productsStore } = this.props
+    const { page } = this.state
+    const { products } = productsStore
+
+    if (loadingType === 'load-more' && products.items.length >= products.total) return
 
     this.setState({
       loadingType
     })
 
-    getProducts(null, () => {
+    getProducts({
+      merge
+    }, (success) => {
       this.setState({
-        loadingType: null
+        loadingType: null,
+        page: success && merge ? page + 1 : 0
       })
     })
   }
@@ -74,6 +82,18 @@ class Home extends Component {
     </View>
   )
 
+  _renderFooter = () => {
+    const { loadingType } = this.state
+
+    if (loadingType === 'load-more') {
+      return (
+        <ActivityIndicator />
+      )
+    }
+
+    return null
+  }
+
   _renderContent = () => {
     const { productsStore } = this.props
     const { loadingType } = this.state
@@ -89,8 +109,10 @@ class Home extends Component {
         keyExtractor={(item, index) => index.toString()}
         style={styles.list}
         contentContainerStyle={{ paddingBottom: 15 }}
-        data={productsStore.products}
+        data={productsStore.products.items}
         renderItem={this._renderItem}
+        ListFooterComponent={this._renderFooter}
+        onEndReached={() => this._onFetchData('load-more', true)}
       />
     )
   }
@@ -98,7 +120,7 @@ class Home extends Component {
   render() {
     return (
       <Screen>
-        <Toolbar title="Products" />
+        <Toolbar title="Components" />
         {this._renderContent()}
       </Screen>
     )
