@@ -39,7 +39,7 @@ const BottomTabNavigator = createBottomTabNavigator({
     }
 
     return {
-      tabBarIcon: ({ tintColor }) => (
+      tabBarIcon: ({ tintColor } : Object) => (
         <Icon
           name={iconName}
           color={tintColor}

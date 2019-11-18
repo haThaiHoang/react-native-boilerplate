@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, StatusBar, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import { connect } from 'react-redux'
@@ -41,6 +42,11 @@ const validationSchema = Yup.object().shape({
 })
 
 class Login extends Component {
+  static propTypes = {
+    authStore: PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired
+  }
+
   _onSubmit = (values) => {
     const { login } = this.props
 

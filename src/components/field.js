@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { View, Text, StyleSheet } from 'react-native'
-import { Field } from 'formik'
+import { Field as FormikField } from 'formik'
 
 const styles = StyleSheet.create({
   field: {
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ({
+const Field = ({
   component: Component,
   name,
   label,
@@ -21,7 +22,15 @@ export default ({
       <Text style={styles.label}>{label}</Text>
     )}
     <View>
-      <Field {...props} name={name} component={Component} />
+      <FormikField {...props} name={name} component={Component} />
     </View>
   </View>
 )
+
+Field.propTypes = {
+  component: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string
+}
+
+export default Field

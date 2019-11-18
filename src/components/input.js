@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { TextInput } from 'react-native'
 
 import { FontSizes } from '@/theme'
@@ -15,6 +16,12 @@ const styles = {
 }
 
 export default class Input extends Component {
+  static propTypes = {
+    field: PropTypes.object,
+    form: PropTypes.object,
+    onChange: PropTypes.func
+  }
+
   _onChange = (value) => {
     const { field, onChange } = this.props
 

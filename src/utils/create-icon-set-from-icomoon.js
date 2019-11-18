@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import {
   Platform,
   Text
@@ -22,9 +23,16 @@ function createIconSet(
   })
 
   class Icon extends PureComponent {
+    static propTypes = {
+      name: PropTypes.string,
+      color: PropTypes.string,
+      size: PropTypes.number,
+      style: PropTypes.object,
+      children: PropTypes.any
+    }
+
     static defaultProps = {
-      size: 12,
-      allowFontScaling: false
+      size: 12
     };
 
     root = null;

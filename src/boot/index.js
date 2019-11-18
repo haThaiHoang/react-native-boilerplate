@@ -15,6 +15,9 @@ export default () => (
       barStyle="light-content"
     />
     <Navigators />
-    <FlashMessage position="top" />
+    <FlashMessage
+      hideStatusBar
+      position="top"
+    />
   </Store>
 )

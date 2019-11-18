@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { View, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
@@ -13,8 +14,14 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ({ children }) => (
+const Screen = ({ children }) => (
   <View style={styles.screen}>
     {children}
   </View>
 )
+
+Screen.propTypes = {
+  children: PropTypes.node.isRequired
+}
+
+export default Screen

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import AsyncStorage from '@react-native-community/async-storage'
 import { connect } from 'react-redux'
 
@@ -13,6 +14,11 @@ import { actions } from '@/store/actions'
 })
 
 class Settings extends Component {
+  static propTypes = {
+    navigation: PropTypes.object.isRequired,
+    clearStore: PropTypes.func.isRequired
+  }
+
   _onLogOut = async () => {
     const { navigation, clearStore } = this.props
 

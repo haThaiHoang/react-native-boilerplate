@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native'
 
 import { FontSizes, Colors } from '@/theme'
@@ -38,6 +39,13 @@ const Button = ({ text, fluid, style, loading, ...props }) => {
       )}
     </TouchableOpacity>
   )
+}
+
+Button.propTypes = {
+  text: PropTypes.any,
+  style: PropTypes.object,
+  loading: PropTypes.bool,
+  fluid: PropTypes.bool
 }
 
 Button.defaultProps = {

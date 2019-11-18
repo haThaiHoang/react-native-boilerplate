@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { FlatList, Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -39,6 +40,11 @@ const styles = StyleSheet.create({
 })
 
 class Home extends Component {
+  static propTypes = {
+    productsStore: PropTypes.object.isRequired,
+    getProducts: PropTypes.func.isRequired
+  }
+
   state = {
     loadingType: null,
     page: 0

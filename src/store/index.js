@@ -21,7 +21,7 @@ const store = createStore(
 
 sagaMiddleware.run(sagas)
 
-export default ({ children }) => (
+export default ({ children } : Object) => (
   <Provider store={store}>
     {children}
   </Provider>

@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, StyleSheet, Text, Platform } from 'react-native'
+import PropTypes from 'prop-types'
+import { View, StyleSheet, Text } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { Colors } from '@/theme'
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: Platform.OS === 'ios' ? 'center' : 'flex-start'
+    justifyContent: 'center'
   },
   title: {
     color: 'white',
@@ -30,10 +31,16 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ({ title }) => (
+const Toolbar = ({ title }) => (
   <View style={styles.container}>
     <View style={styles.content}>
       <Text style={styles.title}>{title}</Text>
     </View>
   </View>
 )
+
+Toolbar.propTypes = {
+  title: PropTypes.string
+}
+
+export default Toolbar
