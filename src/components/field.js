@@ -28,7 +28,7 @@ const Field = ({
 )
 
 Field.propTypes = {
-  component: PropTypes.node.isRequired,
+  component: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string
 }

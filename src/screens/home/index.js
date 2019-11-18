@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FlatList, Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
+import { withTranslation } from 'react-i18next'
 
 import Screen from '@/components/screen'
 import Toolbar from '@/components/toolbar'
@@ -33,11 +34,13 @@ const styles = StyleSheet.create({
   }
 })
 
+@withTranslation()
 @connect((state) => ({
   productsStore: state.products
 }), {
   getProducts: actions.getProducts
 })
+
 
 class Home extends Component {
   static propTypes = {

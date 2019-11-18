@@ -1,4 +1,4 @@
-import { put, select } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import Notification from '@/components/notification'
@@ -29,19 +29,15 @@ export default function sagaHelper({ api, successMessage, errorHandler }) {
       const error = yield Misc.getErrorJsonBody(e)
       yield put({ type: failureType, error })
 
-      const localize = yield select((state) => state.localize)
-      const languageIndex = localize.languages[0].active ? 0 : 1
-      const getLocalizeErrorMessages = (name) => (localize.translations[`error-messages.${name}`] || [])[languageIndex]
-
       if (['TOKEN_EXPIRED'].includes(error.name)) {
         yield AsyncStorage.removeItem('ACCESS_TOKEN')
         yield put(actions.clearStore())
       }
 
       if (errorHandler) {
-        errorHandler(error, getLocalizeErrorMessages)
+        errorHandler(error)
       } else {
-        Notification.error(getLocalizeErrorMessages(error.name) || error.name || `Error code: ${error.status}`)
+        Notification.error(error.name || `Error code: ${error.status}`)
       }
 
       if (callback) callback(false, error)
