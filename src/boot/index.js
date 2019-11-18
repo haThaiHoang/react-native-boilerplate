@@ -1,5 +1,6 @@
 import React from 'react'
 import { StatusBar } from 'react-native'
+import FlashMessage from 'react-native-flash-message'
 
 import { Colors } from '@/theme'
 import Store from '@/store'
@@ -14,5 +15,6 @@ export default () => (
       barStyle="light-content"
     />
     <Navigators />
+    <FlashMessage position="top" />
   </Store>
 )

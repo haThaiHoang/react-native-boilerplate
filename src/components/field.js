@@ -7,17 +7,11 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 5
-  },
-  error: {
-    color: 'red',
-    fontSize: 13,
-    textAlign: 'right'
   }
 })
 
 export default ({
   component: Component,
-  form,
   name,
   label,
   ...props
@@ -28,11 +22,6 @@ export default ({
     )}
     <View>
       <Field {...props} name={name} component={Component} />
-      <Text
-        style={styles.error}
-      >
-        {form.errors[name]}
-      </Text>
     </View>
   </View>
 )
