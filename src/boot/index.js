@@ -1,7 +1,7 @@
 import React from 'react'
 import { StatusBar } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
-import '@/languages'
+import '@/translations'
 
 import { Colors } from '@/theme'
 import Store from '@/store'
