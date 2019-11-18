@@ -1,10 +1,10 @@
 import { Component } from 'react'
+import PropTypes from 'prop-types'
 import AsyncStorage from '@react-native-community/async-storage'
 import SplashScreen from 'react-native-splash-screen'
 import * as Yup from 'yup'
 
 import Request from '@/utils/request'
-import navigation from '@/utils/navigation'
 
 Yup.setLocale({
   mixed: {
@@ -16,7 +16,12 @@ Yup.setLocale({
 })
 
 class Init extends Component {
+  static propTypes = {
+    navigation: PropTypes.object.isRequired
+  }
+
   async componentDidMount() {
+    const { navigation } = this.props
     const token = await AsyncStorage.getItem('ACCESS_TOKEN')
 
     if (token) {
