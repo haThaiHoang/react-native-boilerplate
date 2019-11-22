@@ -1,17 +1,17 @@
 import React from 'react'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
-// import createAnimatedSwitchNavigator from 'react-navigation-animated-switch'
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch'
 
 import { setTopLevelNavigator } from '@/utils/navigation'
 import Init from '@/boot/init'
 import AuthNavigator from './auth-stack'
 import MainNavigator from './main-stack'
 
-const AppContainer = createAppContainer(createSwitchNavigator({
+const AppContainer = createAppContainer(createAnimatedSwitchNavigator({
   Init,
   Auth: AuthNavigator,
   Main: MainNavigator
-}))
+}, {}))
 
 export default (props) => (
   <AppContainer

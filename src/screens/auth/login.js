@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { connect } from 'react-redux'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { showMessage } from 'react-native-flash-message'
 
 import Screen from '@/components/screen'
 import Container from '@/components/container'
@@ -54,11 +53,6 @@ class Login extends Component {
       if (success) {
         await AsyncStorage.setItem('ACCESS_TOKEN', data.token)
         navigation.navigate('Main')
-
-        showMessage({
-          message: 'Login success',
-          type: 'info'
-        })
       }
     })
   }
