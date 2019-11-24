@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { Button, Icon } from 'native-base'
 
-import { FontSizes, Colors } from '@/theme'
-
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',

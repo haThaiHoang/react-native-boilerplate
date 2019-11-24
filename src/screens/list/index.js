@@ -53,8 +53,14 @@ class List extends Component {
     page: 0
   }
 
+  _isMounted = true
+
   componentDidMount() {
     this._onFetchData('init')
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   _onFetchData = (loadingType, merge) => {
@@ -71,10 +77,12 @@ class List extends Component {
     getProducts({
       merge
     }, (success) => {
-      this.setState({
-        loadingType: null,
-        page: success && merge ? page + 1 : 0
-      })
+      if (this._isMounted) {
+        this.setState({
+          loadingType: null,
+          page: success && merge ? page + 1 : 0
+        })
+      }
     })
   }
 
