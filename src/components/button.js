@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const Button = ({ text, fluid, style, loading, ...props }) => {
+const Button = ({ text, children, fluid, style, loading, ...props }) => {
   style = [
     style,
     styles.container,
@@ -29,12 +29,16 @@ const Button = ({ text, fluid, style, loading, ...props }) => {
   ]
 
   return (
-    <TouchableOpacity style={style} {...props}>
+    <TouchableOpacity
+      style={style}
+      activeOpacity={0.8}
+      {...props}
+    >
       {loading ? (
         <ActivityIndicator color="#fff" />
       ) : (
         <Text style={styles.text}>
-          {text}
+          {text || children}
         </Text>
       )}
     </TouchableOpacity>
@@ -42,8 +46,7 @@ const Button = ({ text, fluid, style, loading, ...props }) => {
 }
 
 Button.propTypes = {
-  text: PropTypes.any,
-  style: PropTypes.object,
+  text: PropTypes.string,
   loading: PropTypes.bool,
   fluid: PropTypes.bool
 }

@@ -59,10 +59,19 @@ const closeDrawer = () => {
 }
 
 export {
-  setTopLevelNavigator
+  setTopLevelNavigator,
+  navigate,
+  push,
+  back,
+  reset,
+  replace,
+  openDrawer,
+  toggleDrawer,
+  closeDrawer
 }
 
 export default {
+  setTopLevelNavigator,
   navigate,
   push,
   back,

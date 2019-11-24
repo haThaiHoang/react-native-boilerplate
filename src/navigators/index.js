@@ -1,5 +1,5 @@
 import React from 'react'
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createAppContainer } from 'react-navigation'
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch'
 
 import { setTopLevelNavigator } from '@/utils/navigation'

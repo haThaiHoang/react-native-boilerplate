@@ -2,10 +2,12 @@ import { Component } from 'react'
 import PropTypes from 'prop-types'
 import AsyncStorage from '@react-native-community/async-storage'
 import SplashScreen from 'react-native-splash-screen'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import * as Yup from 'yup'
 
 import Request from '@/utils/request'
 
+EStyleSheet.build()
 Yup.setLocale({
   mixed: {
     required: 'required'

@@ -12,7 +12,7 @@ import Button from '@/components/button'
 import Input from '@/components/input'
 import Field from '@/components/field'
 import { TYPES, actions } from '@/store/actions'
-import navigation from '@/utils/navigation'
+import { navigate } from '@/utils/navigation'
 
 const styles = StyleSheet.create({
   form: {
@@ -52,7 +52,7 @@ class Login extends Component {
     login(values, async (success, data) => {
       if (success) {
         await AsyncStorage.setItem('ACCESS_TOKEN', data.token)
-        navigation.navigate('Main')
+        navigate('Main')
       }
     })
   }

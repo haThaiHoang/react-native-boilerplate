@@ -1,9 +1,11 @@
 import { createStackNavigator } from 'react-navigation-stack'
 
 import BottomTabNavigator from './bottom-tab'
+import List from '@/screens/list'
 
 const MainNavigator = createStackNavigator({
-  BottomTabNavigator
+  BottomTabNavigator,
+  List
 }, {
   headerMode: 'none'
 })
