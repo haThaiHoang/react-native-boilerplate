@@ -1,8 +1,8 @@
 import React from 'react'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { Icon } from 'native-base'
 
 import { Colors } from '@/theme'
-import Icon from '@/components/icon'
 import Home from '@/screens/home'
 import Settings from '@/screens/settings'
 
@@ -27,7 +27,7 @@ export default createBottomTabNavigator({
         iconName = 'home'
         break
       case 'Settings':
-        iconName = 'cog'
+        iconName = 'settings'
         break
       default:
     }
@@ -36,8 +36,9 @@ export default createBottomTabNavigator({
       tabBarIcon: ({ tintColor } : Object) => (
         <Icon
           name={iconName}
-          color={tintColor}
-          size={24}
+          style={{
+            color: tintColor
+          }}
         />
       ),
       tabBarLabel: false

@@ -5,8 +5,7 @@ module.exports = {
     "@babel/plugin-proposal-export-namespace-from",
     ["module-resolver", {
       "alias": {
-        "@": "./src",
-        "iconmoon": "./icomoon.json",
+        "@": "./src"
       }
     }]
   ]
