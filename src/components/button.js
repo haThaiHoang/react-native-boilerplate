@@ -1,27 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native'
+import { Text, StyleSheet, ActivityIndicator } from 'react-native'
+import { Button, Icon } from 'native-base'
 
 import { FontSizes, Colors } from '@/theme'
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.PRIMARY,
-    height: 50,
-    borderRadius: 3,
-    justifyContent: 'center'
-  },
-  fluid: {
-    width: '100%'
+    justifyContent: 'center',
+    borderRadius: 3
   },
   text: {
     textAlign: 'center',
-    fontSize: FontSizes.NORMAL,
     color: 'white'
   }
 })
 
-const Button = ({ text, children, fluid, style, loading, ...props }) => {
+const ButtonComponent = ({ icon, text, children, fluid, style, loading, ...props }) => {
   style = [
     style,
     styles.container,
@@ -29,30 +24,36 @@ const Button = ({ text, children, fluid, style, loading, ...props }) => {
   ]
 
   return (
-    <TouchableOpacity
+    <Button
       style={style}
-      activeOpacity={0.8}
+      iconLeft={icon}
       {...props}
     >
       {loading ? (
         <ActivityIndicator color="#fff" />
       ) : (
-        <Text style={styles.text}>
-          {text || children}
-        </Text>
+        <>
+          {icon && (
+            <Icon name={icon} />
+          )}
+          <Text style={styles.text}>
+            {text || children}
+          </Text>
+        </>
       )}
-    </TouchableOpacity>
+    </Button>
   )
 }
 
-Button.propTypes = {
+ButtonComponent.propTypes = {
   text: PropTypes.string,
   loading: PropTypes.bool,
+  icon: PropTypes.string,
   fluid: PropTypes.bool
 }
 
-Button.defaultProps = {
+ButtonComponent.defaultProps = {
   fluid: false
 }
 
-export default Button
+export default ButtonComponent
