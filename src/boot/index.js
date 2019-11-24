@@ -1,6 +1,5 @@
 import React from 'react'
 import { StatusBar } from 'react-native'
-import FlashMessage from 'react-native-flash-message'
 import '@/translations'
 
 import { Colors } from '@/theme'
@@ -16,9 +15,5 @@ export default () => (
       barStyle="light-content"
     />
     <Navigators />
-    <FlashMessage
-      hideStatusBar
-      position="top"
-    />
   </Store>
 )

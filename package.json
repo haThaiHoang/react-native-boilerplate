@@ -26,7 +26,6 @@
     "react-i18next": "11.2.2",
     "react-native": "0.61.5",
     "react-native-extended-stylesheet": "0.12.0",
-    "react-native-flash-message": "0.1.15",
     "react-native-gesture-handler": "1.5.1",
     "react-native-modals": "git://github.com/haThaiHoang/react-native-modals#master",
     "react-native-reanimated": "1.4.0",
