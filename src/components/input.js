@@ -30,7 +30,7 @@ export default class Input extends Component {
   }
 
   render() {
-    const { field, form, ...props } = this.props
+    const { field, form, onChange, ...props } = this.props
 
     return (
       <TextInput

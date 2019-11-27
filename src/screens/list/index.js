@@ -137,7 +137,10 @@ class List extends Component {
   render() {
     return (
       <Screen>
-        <Toolbar title="List" />
+        <Toolbar
+          back
+          title="List"
+        />
         {this._renderContent()}
       </Screen>
     )

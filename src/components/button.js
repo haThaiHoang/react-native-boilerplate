@@ -5,8 +5,7 @@ import { Button, Icon } from 'native-base'
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    borderRadius: 3
+    justifyContent: 'center'
   },
   text: {
     textAlign: 'center',

@@ -19,7 +19,7 @@ const styles = EStyleSheet.create({
   }
 })
 
-export default () => {
+export default ({ navigation }) => {
   const items = [{
     name: 'List',
     to: 'List'
@@ -36,7 +36,7 @@ export default () => {
           <Button
             key={index}
             style={EStyleSheet.child(styles, 'item', index, items.length)}
-            onPress={() => navigate(item.to)}
+            onPress={() => navigation.navigate(item.to)}
           >
             {item.name}
           </Button>
