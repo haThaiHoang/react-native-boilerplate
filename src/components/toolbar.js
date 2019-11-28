@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { Icon } from 'native-base'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { Colors } from '@/theme'
-import Button from '@/components/button'
 import navigation from '@/utils/navigation'
 
 const styles = StyleSheet.create({
@@ -28,11 +27,18 @@ const styles = StyleSheet.create({
   },
   actionBox: {
     position: 'absolute',
-    left: 5
+    left: 0
   },
   actionButton: {
-    width: 45,
-    height: 45
+    width: 55,
+    height: 55,
+    tintColor: 'white',
+    color: 'white',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  actionButtonIcon: {
+    color: 'white'
   }
 })
 
@@ -41,15 +47,16 @@ const Toolbar = ({ title, back }) => (
     <View style={styles.content}>
       <View style={styles.actionBox}>
         {back && (
-          <Button
-            rounded
-            transparent
-            light
+          <TouchableOpacity
+            activeOpacity={0.7}
             style={styles.actionButton}
             onPress={() => navigation.back()}
           >
-            <Icon name="arrow-back" />
-          </Button>
+            <Icon
+              style={styles.actionButtonIcon}
+              name="arrow-back"
+            />
+          </TouchableOpacity>
         )}
       </View>
       <Text style={styles.title}>{title}</Text>

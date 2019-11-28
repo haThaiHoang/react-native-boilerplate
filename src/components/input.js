@@ -7,7 +7,6 @@ import { FontSizes } from '@/theme'
 const styles = {
   backgroundColor: 'white',
   borderRadius: 3,
-  marginBottom: 5,
   height: 50,
   paddingHorizontal: 12,
   borderWidth: 1,
@@ -30,13 +29,13 @@ export default class Input extends Component {
   }
 
   render() {
-    const { field, form, onChange, ...props } = this.props
+    const { field, form, onChange, style, ...props } = this.props
 
     return (
       <TextInput
         {...field}
         {...props}
-        style={styles}
+        style={[styles, style]}
         onChangeText={this._onChange}
       />
     )
