@@ -1,13 +1,13 @@
 import React from 'react'
 import { View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
+import StyleSheet from 'react-native-extended-stylesheet'
 
 import Screen from '@/components/screen'
 import Toolbar from '@/components/toolbar'
 import Button from '@/components/button'
 import { navigate } from '@/utils/navigation'
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   list: {
     padding: 15
   },
@@ -19,7 +19,7 @@ const styles = EStyleSheet.create({
   }
 })
 
-export default ({ navigation }) => {
+export default () => {
   const items = [{
     name: 'List',
     to: 'List'
@@ -35,8 +35,8 @@ export default ({ navigation }) => {
         {items.map((item, index) => (
           <Button
             key={index}
-            style={EStyleSheet.child(styles, 'item', index, items.length)}
-            onPress={() => navigation.navigate(item.to)}
+            style={StyleSheet.child(styles, 'item', index, items.length)}
+            onPress={() => navigate(item.to)}
           >
             {item.name}
           </Button>
