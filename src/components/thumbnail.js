@@ -17,7 +17,7 @@ const Thumbnail = ({ url, size, rounded, style, ...props }) => (
 )
 
 Thumbnail.propTypes = {
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   size: PropTypes.number,
   rounded: PropTypes.bool
 }

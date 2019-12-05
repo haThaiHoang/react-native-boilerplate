@@ -12,7 +12,14 @@ const styles = StyleSheet.create({
     zIndex: 1,
     paddingTop: getStatusBarHeight(),
     backgroundColor: Colors.PRIMARY,
-    elevation: 5
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4
   },
   content: {
     height: 55,
@@ -25,9 +32,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20
   },
-  actionBox: {
+  leftActionBox: {
     position: 'absolute',
     left: 0
+  },
+  rightActionBox: {
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 0
   },
   actionButton: {
     width: 55,
@@ -38,14 +50,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   actionButtonIcon: {
-    color: 'white'
+    color: 'white',
+    fontSize: 24
   }
 })
 
-const Toolbar = ({ title, back }) => (
+const Toolbar = ({ title, back, actionButtons = [] }) => (
   <View style={styles.container}>
     <View style={styles.content}>
-      <View style={styles.actionBox}>
+      <View style={styles.leftActionBox}>
         {back && (
           <TouchableOpacity
             activeOpacity={0.7}
@@ -60,13 +73,30 @@ const Toolbar = ({ title, back }) => (
         )}
       </View>
       <Text style={styles.title}>{title}</Text>
+      <View style={styles.rightActionBox}>
+        {actionButtons.map((button, index) => (
+          <TouchableOpacity
+            key={index}
+            activeOpacity={0.7}
+            style={styles.actionButton}
+            onPress={button.onPress}
+          >
+            <Icon
+              type={button.iconType}
+              style={styles.actionButtonIcon}
+              name={button.icon}
+            />
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   </View>
 )
 
 Toolbar.propTypes = {
   title: PropTypes.string,
-  back: PropTypes.bool
+  back: PropTypes.bool,
+  actionButtons: PropTypes.array
 }
 
 export default Toolbar
