@@ -1,7 +1,7 @@
 import { put } from 'redux-saga/effects'
 import AsyncStorage from '@react-native-community/async-storage'
+import { Toast } from 'native-base'
 
-import Notification from '@/components/notification'
 import Misc from '@/utils/misc'
 import { actions } from '@/store/actions'
 
@@ -19,7 +19,13 @@ export default function sagaHelper({ api, successMessage, errorHandler }) {
       if (success) {
         yield put({ type: successType, data: result, payload: data })
 
-        if (successMessage) Notification.success(successMessage)
+        if (successMessage) {
+          Toast.show({
+            type: 'success',
+            text: successMessage,
+            buttonText: 'Ok'
+          })
+        }
 
         if (callback) callback(true, result)
       } else {
@@ -37,7 +43,11 @@ export default function sagaHelper({ api, successMessage, errorHandler }) {
       if (errorHandler) {
         errorHandler(error)
       } else {
-        Notification.error(error.name || `Error code: ${error.status}`)
+        Toast.show({
+          type: 'danger',
+          text: error.name || `Error code: ${error.status}`,
+          buttonText: 'Ok'
+        })
       }
 
       if (callback) callback(false, error)
