@@ -92,6 +92,7 @@ class Login extends Component {
         <StatusBar barStyle="dark-content" />
         <Container full>
           <Formik
+            initialValues={{}}
             validateOnChange={false}
             validateOnBlur={false}
             validationSchema={validationSchema}

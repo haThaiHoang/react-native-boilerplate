@@ -22,7 +22,11 @@ const Field = ({
       <Text style={styles.label}>{label}</Text>
     )}
     <View>
-      <FormikField {...props} name={name} component={Component} />
+      <FormikField
+        {...props}
+        name={name}
+        component={Component}
+      />
     </View>
   </View>
 )
