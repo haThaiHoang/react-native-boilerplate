@@ -36,7 +36,7 @@ export default class Input extends Component {
 
     return (
       <TextInput
-        value={field.value}
+        value={field?.value}
         {...props}
         style={[styles, style]}
         onChangeText={this._handle('onChange')}
