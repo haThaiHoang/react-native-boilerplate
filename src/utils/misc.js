@@ -1,6 +1,6 @@
 import lodash from 'lodash'
 
-import Configs from '@/configs/develop.json'
+import Configs from '@/configs'
 
 function isFetchError(error) {
   return !!error && lodash.hasIn(error, 'status') && lodash.isFunction(error.json)

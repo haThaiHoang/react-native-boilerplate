@@ -1,4 +1,5 @@
 {
   "GOOGLE_KEY": "",
-  "PAGINATION_PAGE_SIZE": 20
+  "PAGINATION_PAGE_SIZE": 20,
+  "API_URL": "http://example.com"
 }
