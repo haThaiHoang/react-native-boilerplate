@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   }
 })
 
-
 const validationSchema = Yup.object().shape({
   username: Yup.string().required(),
   password: Yup.string().required()
@@ -57,7 +56,7 @@ class Login extends Component {
     })
   }
 
-  _renderForm = ({ handleSubmit }) => {
+  _renderForm = ({ handleSubmit, isValid }) => {
     const { authStore } = this.props
 
     return (
@@ -77,6 +76,7 @@ class Login extends Component {
           />
         </View>
         <Button
+          disabled={!isValid}
           loading={authStore.submitting === TYPES.LOGIN_REQUEST}
           style={styles.loginButton}
           onPress={handleSubmit}
@@ -93,8 +93,10 @@ class Login extends Component {
         <Container full>
           <Formik
             initialValues={{}}
-            validateOnChange={false}
-            validateOnBlur={false}
+            initialErrors={{
+              username: 'required',
+              password: 'required'
+            }}
             validationSchema={validationSchema}
             onSubmit={this._onSubmit}
             component={this._renderForm}
