@@ -3,9 +3,10 @@ import { StatusBar } from 'react-native'
 import { Root } from 'native-base'
 import '@/translations'
 
-import { Colors } from '@/theme'
 import Store from '@/store'
+import Theme, { Colors } from '@/theme'
 import Navigators from '@/navigators'
+import MaskLoader from '@/components/mask-loader'
 
 export default () => (
   <Store>
@@ -15,8 +16,13 @@ export default () => (
       backgroundColor={Colors.setAlpha('black', 0.2)}
       barStyle="light-content"
     />
-    <Root>
-      <Navigators />
-    </Root>
+    <Theme>
+      <Root>
+        <Navigators />
+      </Root>
+    </Theme>
+    <MaskLoader
+      ref={(ref) => MaskLoader.setInstance(ref)}
+    />
   </Store>
 )

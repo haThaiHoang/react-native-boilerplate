@@ -1,18 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Text, StyleSheet, ActivityIndicator } from 'react-native'
-import { Button, Icon } from 'native-base'
-
-import { Colors } from '@/theme'
+import { StyleSheet, ActivityIndicator } from 'react-native'
+import { Button, Icon, Text } from 'native-base'
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    backgroundColor: Colors.PRIMARY
+    elevation: 0,
+    shadowOpacity: 0
   },
   text: {
-    textAlign: 'center',
-    color: 'white'
+    textAlign: 'center'
   },
   disabled: {
     opacity: 0.5
@@ -41,9 +39,11 @@ const ButtonComponent = ({ icon, text, children, fluid, style, loading, disabled
           {icon && (
             <Icon name={icon} />
           )}
-          <Text style={styles.text}>
-            {text || children}
-          </Text>
+          {(text || children) && (
+            <Text style={styles.text}>
+              {text || children}
+            </Text>
+          )}
         </>
       )}
     </Button>
