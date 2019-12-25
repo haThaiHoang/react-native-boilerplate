@@ -4,15 +4,15 @@ import { View, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15
+    paddingHorizontal: 15
   },
   full: {
     flex: 1
   }
 })
 
-const Container = ({ children, full }) => (
-  <View style={[styles.container, full && styles.full]}>
+const Container = ({ children, full, style }) => (
+  <View style={[style, styles.container, full && styles.full]}>
     {children}
   </View>
 )

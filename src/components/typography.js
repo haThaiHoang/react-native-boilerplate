@@ -22,7 +22,6 @@ const Typography = ({ children, large, big, light, bold, style }) => {
 }
 
 Typography.propTypes = {
-  children: PropTypes.string.isRequired,
   large: PropTypes.bool,
   big: PropTypes.bool,
   bold: PropTypes.bool,

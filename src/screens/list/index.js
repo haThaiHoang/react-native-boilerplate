@@ -121,6 +121,7 @@ class List extends Component {
 
     return (
       <FlatList
+        inverted
         refreshing={loadingType === 'refresh'}
         onRefresh={() => this._onFetchData('refresh')}
         keyExtractor={(item, index) => index.toString()}
