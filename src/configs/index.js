@@ -1,3 +1,8 @@
-import DefaultConfig from './default.json'
+import Config from 'react-native-config'
 
-export default DefaultConfig
+import DefaultConfig from './default.json'
+alert(Config.API_URL)
+export default {
+  ...DefaultConfig,
+  ...Config
+}
