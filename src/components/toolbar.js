@@ -4,7 +4,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { Icon } from 'native-base'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-import { Colors } from '@/theme'
+import { Colors, Dimensions } from '@/theme'
 import navigation from '@/utils/navigation'
 
 const styles = StyleSheet.create({
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     elevation: 4
   },
   content: {
-    height: 55,
+    height: Dimensions.TOOL_BAR_HEIGHT,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',

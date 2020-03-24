@@ -4,8 +4,8 @@ import mockData from '@/utils/mock-api'
 export function getProducts() {
   return mockData({
     data: {
-      success: true,
-      result: {
+      status: true,
+      data: {
         items: [{
           id: 1,
           avatar: 'https://image.shutterstock.com/image-photo/red-apple-on-white-background-260nw-158989157.jpg',

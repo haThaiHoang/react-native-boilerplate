@@ -1,28 +1,16 @@
 import React from 'react'
-import { createStore, applyMiddleware, compose } from 'redux'
-import { Provider } from 'react-redux'
-import createSagaMiddleware from 'redux-saga'
+import { Provider } from 'mobx-react'
 
-import rootReducer from './reducers'
-import sagas from './sagas'
+import auth from './auth'
+import products from './products'
 
-// eslint-disable-next-line no-underscore-dangle
-const composeEnhancers = (process.env.NODE_ENV === 'development' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
-  || compose
-const sagaMiddleware = createSagaMiddleware()
-const store = createStore(
-  rootReducer,
-  composeEnhancers(
-    applyMiddleware(
-      sagaMiddleware
-    )
-  )
-)
+const stores = {
+  auth,
+  products
+}
 
-sagaMiddleware.run(sagas)
-
-export default ({ children } : Object) => (
-  <Provider store={store}>
+export default ({ children }) => (
+  <Provider {...stores}>
     {children}
   </Provider>
 )

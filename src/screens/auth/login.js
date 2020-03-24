@@ -2,17 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { View, StatusBar, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
-import { connect } from 'react-redux'
+import { inject, observer } from 'mobx-react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
+import Request from '@/utils/request'
 import Screen from '@/components/screen'
 import Container from '@/components/container'
 import Button from '@/components/button'
 import Input from '@/components/input'
 import Field from '@/components/field'
-import { TYPES, actions } from '@/store/actions'
-import { navigate } from '@/utils/navigation'
 
 const styles = StyleSheet.create({
   form: {
@@ -33,58 +32,50 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required()
 })
 
-@connect((state) => ({
-  authStore: state.auth
-}), {
-  login: actions.login
-})
-
+@inject((stores) => ({
+  authStore: stores.auth
+}))
+@observer
 class Login extends Component {
   static propTypes = {
-    authStore: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired
+    authStore: PropTypes.object.isRequired
   }
 
-  _onSubmit = (values) => {
-    const { login } = this.props
-
-    login(values, async (success, data) => {
-      if (success) {
-        await AsyncStorage.setItem('ACCESS_TOKEN', data.token)
-        navigate('Main')
-      }
-    })
-  }
-
-  _renderForm = ({ handleSubmit, isValid }) => {
+  _onSubmit = async (values) => {
     const { authStore } = this.props
 
-    return (
-      <View style={styles.form}>
-        <View style={styles.fieldGroup}>
-          <Field
-            name="username"
-            label="Username"
-            component={Input}
-          />
-          <Field
-            secureTextEntry
-            name="password"
-            label="Password"
-            type="password"
-            component={Input}
-          />
-        </View>
-        <Button
-          disabled={!isValid}
-          loading={authStore.submitting === TYPES.LOGIN_REQUEST}
-          style={styles.loginButton}
-          onPress={handleSubmit}
-          text="Login"
+    const { success, data } = await authStore.login(values)
+
+    if (success) {
+      Request.setAccessToken(data.token)
+      await AsyncStorage.setItem('ACCESS_TOKEN', data.token)
+    }
+  }
+
+  _renderForm = ({ handleSubmit, isValid }) => (
+    <View style={styles.form}>
+      <View style={styles.fieldGroup}>
+        <Field
+          name="username"
+          label="Username"
+          component={Input}
+        />
+        <Field
+          secureTextEntry
+          name="password"
+          label="Password"
+          type="password"
+          component={Input}
         />
       </View>
-    )
-  }
+      <Button
+        disabled={!isValid}
+        style={styles.loginButton}
+        onPress={handleSubmit}
+        text="Login"
+      />
+    </View>
+  )
 
   render() {
     return (

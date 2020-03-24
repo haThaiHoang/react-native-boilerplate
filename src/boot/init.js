@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import SplashScreen from 'react-native-splash-screen'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import * as Yup from 'yup'
+import { inject } from 'mobx-react'
 
 import Request from '@/utils/request'
 
@@ -17,23 +18,27 @@ Yup.setLocale({
   }
 })
 
+@inject((stores) => ({
+  authStore: stores.auth
+}))
 class Init extends Component {
   static propTypes = {
-    navigation: PropTypes.object.isRequired
+    authStore: PropTypes.object
   }
 
   async componentDidMount() {
-    const { navigation } = this.props
+    const { authStore } = this.props
+
     const token = await AsyncStorage.getItem('ACCESS_TOKEN')
 
     if (token) {
+      authStore.setLoggedIn(true)
       Request.setAccessToken(token)
-      navigation.navigate('Main')
-    } else {
-      navigation.navigate('Auth')
     }
 
-    SplashScreen.hide()
+    setTimeout(() => {
+      SplashScreen.hide()
+    }, 200)
   }
 
   render() {

@@ -1,4 +1,4 @@
-import { NavigationActions, StackActions, DrawerActions } from 'react-navigation'
+import { CommonActions, StackActions, DrawerActions } from '@react-navigation/native'
 
 let navigator
 
@@ -6,43 +6,28 @@ const setTopLevelNavigator = (navigatorRef) => {
   navigator = navigatorRef
 }
 
-const navigate = (routeName, params) => {
+const navigate = (name, params) => {
   navigator.dispatch(
-    NavigationActions.navigate({
-      routeName,
+    CommonActions.navigate({
+      name,
       params
     })
   )
 }
 
-const push = (routeName, params) => {
+const push = (name, params) => {
   navigator.dispatch(
-    StackActions.push({
-      routeName,
-      params
-    })
+    StackActions.push(name, params)
   )
 }
 
-const back = () => {
-  navigator.dispatch(NavigationActions.back({}))
+const goBack = () => {
+  navigator.dispatch(CommonActions.goBack())
 }
 
-const replace = (routeName, params) => {
+const replace = (name, params) => {
   navigator.dispatch(
-    StackActions.replace({
-      routeName,
-      params
-    })
-  )
-}
-
-const reset = (routeName, params) => {
-  navigator.dispatch(
-    StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName, params })]
-    })
+    StackActions.replace(name, params)
   )
 }
 
@@ -62,8 +47,7 @@ export {
   setTopLevelNavigator,
   navigate,
   push,
-  back,
-  reset,
+  goBack,
   replace,
   openDrawer,
   toggleDrawer,
@@ -74,8 +58,7 @@ export default {
   setTopLevelNavigator,
   navigate,
   push,
-  back,
-  reset,
+  goBack,
   replace,
   openDrawer,
   toggleDrawer,

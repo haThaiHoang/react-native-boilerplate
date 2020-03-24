@@ -6,8 +6,8 @@ export function login(/* payload */) {
 
   return mockData({
     data: {
-      success: true,
-      result: {
+      status: true,
+      data: {
         token: 'SH6643HDHJSGFJSD73475674856'
       }
     }

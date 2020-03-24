@@ -5,6 +5,7 @@ import platform from 'native-base/dist/src/theme/variables/platform'
 import * as FontSizes from './font-sizes'
 import * as Images from './images'
 import * as Colors from './colors'
+import * as Dimensions from './dimensions'
 
 platform.brandPrimary = Colors.PRIMARY
 
@@ -21,7 +22,8 @@ const Theme = ({ children }) => (
 export {
   FontSizes,
   Images,
-  Colors
+  Colors,
+  Dimensions
 }
 
 export default Theme

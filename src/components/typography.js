@@ -2,18 +2,33 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Text } from 'react-native'
 
-const Typography = ({ children, large, big, light, bold, style }) => {
+import { Colors } from '@/theme'
+
+const Typography = ({
+  children,
+  align,
+  large,
+  big,
+  small,
+  tiny,
+  light,
+  bold,
+  style,
+  ...props
+}) => {
   const handleStyle = {
-    fontSize: large ? 20 : big ? 25 : 14,
+    fontSize: large ? 17 : big ? 25 : small ? 12 : tiny ? 10 : 14,
     fontWeight: bold ? 'bold' : 'normal',
-    color: light ? 'white' : null
+    color: light ? 'white' : Colors.DARK,
+    textAlign: align
   }
 
   return (
     <Text
+      {...props}
       style={[
-        style,
-        handleStyle
+        handleStyle,
+        style
       ]}
     >
       {children}
@@ -24,8 +39,11 @@ const Typography = ({ children, large, big, light, bold, style }) => {
 Typography.propTypes = {
   large: PropTypes.bool,
   big: PropTypes.bool,
+  small: PropTypes.bool,
+  tiny: PropTypes.bool,
   bold: PropTypes.bool,
-  light: PropTypes.bool
+  light: PropTypes.bool,
+  align: PropTypes.string
 }
 
 export default Typography

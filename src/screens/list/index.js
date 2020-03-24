@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FlatList, Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native'
-import { connect } from 'react-redux'
-import { withTranslation } from 'react-i18next'
+import { inject, observer } from 'mobx-react'
 
 import Screen from '@/components/screen'
 import Toolbar from '@/components/toolbar'
 import Loading from '@/components/loading'
-import { actions } from '@/store/actions'
 
 const styles = StyleSheet.create({
   list: {
@@ -34,18 +32,13 @@ const styles = StyleSheet.create({
   }
 })
 
-@withTranslation()
-@connect((state) => ({
-  productsStore: state.products
-}), {
-  getProducts: actions.getProducts
-})
-
-
+@inject((stores) => ({
+  productsStore: stores.products
+}))
+@observer
 class List extends Component {
   static propTypes = {
-    productsStore: PropTypes.object.isRequired,
-    getProducts: PropTypes.func.isRequired
+    productsStore: PropTypes.object.isRequired
   }
 
   state = {
@@ -64,7 +57,7 @@ class List extends Component {
   }
 
   _onFetchData = (loadingType, merge) => {
-    const { getProducts, productsStore } = this.props
+    const { productsStore } = this.props
     const { page } = this.state
     const { products } = productsStore
 
@@ -74,7 +67,7 @@ class List extends Component {
       loadingType
     })
 
-    getProducts({
+    productsStore.getProducts({
       merge
     }, (success) => {
       if (this._isMounted) {

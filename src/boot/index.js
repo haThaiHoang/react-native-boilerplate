@@ -5,6 +5,7 @@ import '@/translations'
 
 import Store from '@/store'
 import Theme, { Colors } from '@/theme'
+import Init from '@/boot/init'
 import Navigators from '@/navigators'
 import MaskLoader from '@/components/mask-loader'
 
@@ -18,6 +19,7 @@ export default () => (
     />
     <Theme>
       <Root>
+        <Init />
         <Navigators />
       </Root>
     </Theme>
