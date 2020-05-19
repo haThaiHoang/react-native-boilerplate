@@ -1,56 +1,27 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import { inject, observer } from 'mobx-react'
 
 import { setTopLevelNavigator } from '@/utils/navigation'
+import screenOptions from '@/navigators/screen-options'
+
+// Auth
 import Login from '@/screens/auth/login'
+
+// Home
 import Home from '@/screens/home'
+
+// List
 import List from '@/screens/list'
+import ItemDetails from '@/screens/list/item-details-screen'
+
+// List
+import Settings from '@/screens/settings'
+
 
 const Stack = createStackNavigator()
-
-const screenOptions = {
-  bottomSheet: {
-    cardStyle: {
-      backgroundColor: 'transparent'
-    },
-    cardOverlayEnabled: true,
-    gestureEnabled: false,
-    cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
-  },
-  modal: {
-    cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-    gestureEnabled: false
-  },
-  card: {
-    gestureDirection: 'horizontal',
-    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
-  },
-  fade: {
-    cardStyleInterpolator: ({ current }) => ({
-      cardStyle: {
-        opacity: current.progress
-      }
-    }),
-    transitionSpec: {
-      open: {
-        animation: 'timing',
-        config: {
-          duration: 200
-        }
-      },
-      close: {
-        animation: 'timing',
-        config: {
-          duration: 200
-        }
-      }
-    },
-    gestureEnabled: false
-  }
-}
 
 @inject((stores) => ({
   authStore: stores.auth
@@ -70,7 +41,9 @@ class RootNavigator extends Component {
   _renderMainRoutes = () => (
     <>
       <Stack.Screen name="Home" component={Home} options={screenOptions.fade} />
-      <Stack.Screen name="List" component={List} options={screenOptions.fade} />
+      <Stack.Screen name="List" component={List} options={screenOptions.modal} />
+      <Stack.Screen name="ItemDetails" component={ItemDetails} options={screenOptions.card} />
+      <Stack.Screen name="Settings" component={Settings} options={screenOptions.modal} />
     </>
   )
 

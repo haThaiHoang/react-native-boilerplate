@@ -1,8 +1,8 @@
 import { types, flow, getSnapshot, applySnapshot } from 'mobx-state-tree'
-import { Toast } from 'native-base'
 import lodash from 'lodash'
 import AsyncStorage from '@react-native-community/async-storage'
 
+import Toast from '@/components/toast'
 import Misc from '@/utils/misc'
 import Request from '@/utils/request'
 import { navigate } from '@/utils/navigation'
@@ -41,27 +41,20 @@ const Modal = types.model('MobxModalHelper', {
 
       try {
         if (api) {
-          const { data: result, status } = yield api(payload)
+          const result = yield api(payload)
 
-          if (status) {
-            if (onSuccess) onSuccess(result)
+          if (onSuccess) onSuccess(result)
 
-            if (successMessage) {
-              Toast.show({
-                type: 'success',
-                text: successMessage,
-                buttonText: 'Ok'
-              })
-            }
-
-            success = true
-            data = result
-          } else {
-            success = false
-            data = result
-
-            throw result
+          if (successMessage) {
+            Toast.show({
+              type: 'success',
+              text: successMessage,
+              buttonText: 'Ok'
+            })
           }
+
+          success = true
+          data = result
         }
       } catch (e) {
         const error = yield Misc.getErrorJsonBody(e)
@@ -80,13 +73,11 @@ const Modal = types.model('MobxModalHelper', {
         if (onError) onError(e)
 
         if (!disabledErrorMessage) {
-          Toast.show({
-            type: 'danger',
-            text: (handleError && (ERROR_MESSAGE[handleError(error)] || handleError(error)))
-              || (ERROR_MESSAGE[error.messageCode] || error.messageCode)
-              || `Error code: ${error.status || '0'}`,
-            buttonText: 'Ok'
-          })
+          Toast.error(
+            (handleError && (ERROR_MESSAGE[handleError(error)] || handleError(error)))
+            || (ERROR_MESSAGE[error.messageCode] || error.messageCode)
+            || error.message
+          )
         }
       }
 

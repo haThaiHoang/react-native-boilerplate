@@ -23,13 +23,16 @@ const ProductsStore = Modal.named('ProductsStore')
     })
   })
   .actions((self) => ({
-    getProducts(payload) {
+    getProducts({ concat, ...payload }) {
       return self.request({
         type: TYPES.GET_PRODUCTS,
         api: getProducts,
         payload,
         onSuccess: (result) => {
-          self.products = result
+          self.products = {
+            items: concat ? self.products.items.concat(result.products) : result.products,
+            total: result.total
+          }
         }
       })
     }

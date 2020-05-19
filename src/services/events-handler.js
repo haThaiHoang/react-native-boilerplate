@@ -1,5 +1,3 @@
-import { Alert } from 'react-native'
-
 import { navigate } from '@/utils/navigation'
 import {
 } from './events'

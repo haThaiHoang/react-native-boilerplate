@@ -1,37 +1,40 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
-import { connect } from 'react-redux'
+import { inject } from 'mobx-react'
 
 import Container from '@/components/container'
 import Screen from '@/components/screen'
 import Button from '@/components/button'
 import Toolbar from '@/components/toolbar'
-import { actions } from '@/store/actions'
 
-@connect(null, {
-  clearStore: actions.clearStore
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 20
+  }
 })
 
+@inject((stores) => ({
+  authStore: stores.auth
+}))
 class Settings extends Component {
   static propTypes = {
-    navigation: PropTypes.object.isRequired,
-    clearStore: PropTypes.func.isRequired
+    authStore: PropTypes.object
   }
 
   _onLogOut = async () => {
-    const { navigation, clearStore } = this.props
+    const { authStore } = this.props
 
     await AsyncStorage.removeItem('ACCESS_TOKEN')
-    navigation.navigate('Login')
-    clearStore()
+    authStore.setLoggedIn(false)
   }
 
   render() {
     return (
       <Screen>
-        <Toolbar title="Settings" />
-        <Container>
+        <Toolbar title="Settings" back />
+        <Container style={styles.container}>
           <Button
             text="Logout"
             onPress={this._onLogOut}

@@ -12,6 +12,7 @@ import Container from '@/components/container'
 import Button from '@/components/button'
 import Input from '@/components/input'
 import Field from '@/components/field'
+import MaskLoader from '@/components/mask-loader'
 
 const styles = StyleSheet.create({
   form: {
@@ -44,12 +45,16 @@ class Login extends Component {
   _onSubmit = async (values) => {
     const { authStore } = this.props
 
+    MaskLoader.show()
+
     const { success, data } = await authStore.login(values)
 
     if (success) {
       Request.setAccessToken(data.token)
       await AsyncStorage.setItem('ACCESS_TOKEN', data.token)
     }
+
+    MaskLoader.hide()
   }
 
   _renderForm = ({ handleSubmit, isValid }) => (

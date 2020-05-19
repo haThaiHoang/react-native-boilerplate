@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FlatList, Text, View, Image, StyleSheet, ActivityIndicator } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import { inject, observer } from 'mobx-react'
 
 import Screen from '@/components/screen'
 import Toolbar from '@/components/toolbar'
-import Loading from '@/components/loading'
+import Touchable from '@/components/touchable'
+import Thumbnail from '@/components/thumbnail'
+import FetchableList from '@/components/fetchable-list'
+import { navigate } from '@/utils/navigation'
 
 const styles = StyleSheet.create({
   list: {
@@ -19,9 +22,6 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   avatar: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
     marginRight: 20
   },
   infoBox: {
@@ -41,89 +41,40 @@ class List extends Component {
     productsStore: PropTypes.object.isRequired
   }
 
-  state = {
-    loadingType: null,
-    page: 0
-  }
-
-  _isMounted = true
-
-  componentDidMount() {
-    this._onFetchData('init')
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false
-  }
-
-  _onFetchData = (loadingType, merge) => {
-    const { productsStore } = this.props
-    const { page } = this.state
-    const { products } = productsStore
-
-    if (loadingType === 'load-more' && products.items.length >= products.total) return
-
-    this.setState({
-      loadingType
-    })
-
-    productsStore.getProducts({
-      merge
-    }, (success) => {
-      if (this._isMounted) {
-        this.setState({
-          loadingType: null,
-          page: success && merge ? page + 1 : 0
-        })
-      }
+  _onItemPress = (item) => {
+    navigate('ItemDetails', {
+      product: item
     })
   }
 
   _renderItem = ({ item }) => (
-    <View style={styles.itemBox}>
-      <Image
+    <Touchable
+      style={styles.itemBox}
+      onPress={() => this._onItemPress(item)}
+    >
+      <Thumbnail
+        size={70}
+        rounded
         style={styles.avatar}
-        source={{ uri: item.avatar }}
+        url={item.avatar}
       />
       <View style={styles.infoBox}>
         <Text>Name: {item.name}</Text>
         <Text>Description: {item.description}</Text>
       </View>
-    </View>
+    </Touchable>
   )
-
-  _renderFooter = () => {
-    const { loadingType } = this.state
-
-    if (loadingType === 'load-more') {
-      return (
-        <ActivityIndicator />
-      )
-    }
-
-    return null
-  }
 
   _renderContent = () => {
     const { productsStore } = this.props
-    const { loadingType } = this.state
-
-    if (loadingType === 'init') {
-      return <Loading />
-    }
 
     return (
-      <FlatList
-        inverted
-        refreshing={loadingType === 'refresh'}
-        onRefresh={() => this._onFetchData('refresh')}
-        keyExtractor={(item, index) => index.toString()}
-        style={styles.list}
-        contentContainerStyle={{ paddingBottom: 15 }}
-        data={productsStore.products.items}
+      <FetchableList
+        contentContainerStyle={styles.list}
+        action={productsStore.getProducts}
+        items={productsStore.products.items}
+        total={productsStore.products.total}
         renderItem={this._renderItem}
-        ListFooterComponent={this._renderFooter}
-        onEndReached={() => this._onFetchData('load-more', true)}
       />
     )
   }

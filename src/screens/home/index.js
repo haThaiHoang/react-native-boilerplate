@@ -24,8 +24,8 @@ export default () => {
     name: 'List',
     to: 'List'
   }, {
-    name: 'Typography',
-    to: 'Typography'
+    name: 'Settings',
+    to: 'Settings'
   }]
 
   return (

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { FlatList, View, Animated } from 'react-native'
+import React, { PureComponent } from 'react'
+import { FlatList, View, Animated, ActivityIndicator, StyleSheet, RefreshControl } from 'react-native'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 
@@ -8,22 +8,31 @@ import Loading from '@/components/loading'
 import NoDataView from '@/components/no-data-view'
 import Misc from '@/utils/misc'
 
+const styles = StyleSheet.create({
+  footerBox: {
+    height: 60,
+    justifyContent: 'center'
+  }
+})
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 @observer
-class FetchableList extends Component {
+class FetchableList extends PureComponent {
   static propTypes = {
     action: PropTypes.func,
     renderItem: PropTypes.func,
     innerRef: PropTypes.func,
     onInit: PropTypes.func,
+    onRefresh: PropTypes.func,
     onFetched: PropTypes.func,
+    keyExtractor: PropTypes.func,
     payload: PropTypes.object,
     defaultNewPayload: PropTypes.object,
     items: PropTypes.array,
     total: PropTypes.number,
+    progressViewOffset: PropTypes.number,
     numColumns: PropTypes.number,
-    fetching: PropTypes.bool,
     animated: PropTypes.bool
   }
 
@@ -33,9 +42,12 @@ class FetchableList extends Component {
     this.state = {
       initialing: true,
       refreshing: false,
+      loadingMore: false,
       currentPage: 0,
       newPayload: props.defaultNewPayload || {}
     }
+
+    this._preventReadchedFetchCurrentPage = 0
   }
 
   componentDidMount() {
@@ -47,10 +59,11 @@ class FetchableList extends Component {
   }
 
   _fetchData = async (onDone) => {
-    const { action, payload, onInit, onFetched } = this.props
-    const { newPayload } = this.state
+    const { action, payload, onInit, onRefresh, onFetched } = this.props
+    const { newPayload, initialing, refreshing } = this.state
 
-    if (onInit) await onInit()
+    if (onInit && initialing) await onInit()
+    if (onRefresh && !initialing && refreshing) await onRefresh()
     const result = await action({
       ...newPayload,
       ...payload,
@@ -58,7 +71,7 @@ class FetchableList extends Component {
       limit: Config.PAGINATION_PAGE_SIZE
     })
 
-    if (onFetched) onFetched(result)
+    if (onFetched) onFetched(result, initialing)
     if (onDone) onDone()
   }
 
@@ -71,30 +84,42 @@ class FetchableList extends Component {
     })
   }
 
-  scrollToOffset = (offset) => {
+  scrollToOffset = (params) => {
+    const { animated } = this.props
+
     if (this._flatListComponent) {
-      this._flatListComponent.getNode().scrollToOffset(offset)
+      if (animated) {
+        this._flatListComponent.getNode().scrollToOffset(params)
+      } else {
+        this._flatListComponent.scrollToOffset(params)
+      }
     }
   }
 
   _onRefresh = () => {
     this.setState({
       refreshing: true
-    })
-
-    this._fetchData(() => {
-      this.setState({
-        refreshing: false,
-        currentPage: 0
+    }, () => {
+      this._fetchData(() => {
+        this.setState({
+          refreshing: false,
+          currentPage: 0
+        })
       })
     })
   }
 
   _onEndReached = async () => {
-    const { action, payload, fetching, items, total, onFetched } = this.props
+    const { action, payload, items, total, onFetched } = this.props
     const { currentPage, newPayload } = this.state
 
-    if (items.length < total && !fetching) {
+    if (items.length < total && !this._isReachedFetching) {
+      this._isReachedFetching = true
+
+      this.setState({
+        loadingMore: true
+      })
+
       const result = await action({
         ...newPayload,
         ...payload,
@@ -103,12 +128,12 @@ class FetchableList extends Component {
         limit: Config.PAGINATION_PAGE_SIZE
       })
 
-      if (result.success) {
-        this.setState({
-          currentPage: currentPage + 1
-        })
-      }
+      this.setState({
+        currentPage: result.success ? currentPage + 1 : currentPage,
+        loadingMore: false
+      })
 
+      this._isReachedFetching = false
       if (onFetched) onFetched(result)
     }
   }
@@ -123,6 +148,15 @@ class FetchableList extends Component {
     return renderItem({ item, index })
   }
 
+  _renderFooter = () => {
+    const { loadingMore } = this.state
+
+    return loadingMore && (
+      <View style={styles.footerBox}>
+        <ActivityIndicator />
+      </View>
+    )
+  }
 
   render() {
     const {
@@ -130,32 +164,44 @@ class FetchableList extends Component {
       renderItem,
       action,
       payload,
-      fetching,
       total,
       numColumns,
       animated,
       innerRef,
+      onRefresh,
+      keyExtractor,
+      progressViewOffset,
       ...props
     } = this.props
     const { initialing, refreshing } = this.state
 
-    const data = numColumns > 1
-      ? Misc.balanceCollumnFlatListData(items, numColumns)
-      : items
+    let data = []
+
+    if (!initialing) {
+      data = numColumns > 1
+        ? Misc.balanceCollumnFlatListData(items, numColumns)
+        : items
+    }
 
     const FlatListComponent = animated ? AnimatedFlatList : FlatList
 
     return (
       <FlatListComponent
         {...props}
+        refreshControl={(
+          <RefreshControl
+            progressViewOffset={progressViewOffset}
+            refreshing={refreshing}
+            onRefresh={this._onRefresh}
+          />
+        )}
         ref={(ref) => { this._flatListComponent = ref }}
-        ListEmptyComponent={initialing ? Loading : NoDataView}
+        ListEmptyComponent={initialing ? Loading : () => <NoDataView inverted={props.inverted} />}
         numColumns={numColumns}
-        refreshing={refreshing}
-        onRefresh={this._onRefresh}
         onEndReached={this._onEndReached}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(row, index) => index.toString()}
+        ListFooterComponent={this._renderFooter}
+        keyExtractor={keyExtractor || ((row, index) => index.toString())}
         data={data}
         extraData={props.extraData || data.length}
         renderItem={this._renderItem}

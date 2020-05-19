@@ -5,7 +5,7 @@ import { Icon } from 'native-base'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { Colors, Dimensions } from '@/theme'
-import navigation from '@/utils/navigation'
+import { goBack } from '@/utils/navigation'
 
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +63,7 @@ const Toolbar = ({ title, back, actionButtons = [] }) => (
           <TouchableOpacity
             activeOpacity={0.7}
             style={styles.actionButton}
-            onPress={() => navigation.back()}
+            onPress={() => goBack()}
           >
             <Icon
               style={styles.actionButtonIcon}

@@ -1,4 +1,6 @@
+/* Navigation helper services */
 import { CommonActions, StackActions, DrawerActions } from '@react-navigation/native'
+import lodash from 'lodash'
 
 let navigator
 
@@ -31,6 +33,22 @@ const replace = (name, params) => {
   )
 }
 
+const pop = (index) => {
+  navigator.dispatch(StackActions.popToTop(index))
+}
+
+const popToTop = () => {
+  navigator.dispatch(StackActions.popToTop())
+}
+
+const reset = (param) => {
+  if (lodash.isFunction(param)) {
+    navigator.dispatch((state) => CommonActions.reset(param(state)))
+  } else {
+    navigator.dispatch(CommonActions.reset(param))
+  }
+}
+
 const toggleDrawer = () => {
   navigator.dispatch(DrawerActions.toggleDrawer())
 }
@@ -49,6 +67,9 @@ export {
   push,
   goBack,
   replace,
+  pop,
+  popToTop,
+  reset,
   openDrawer,
   toggleDrawer,
   closeDrawer
@@ -60,6 +81,9 @@ export default {
   push,
   goBack,
   replace,
+  pop,
+  popToTop,
+  reset,
   openDrawer,
   toggleDrawer,
   closeDrawer
