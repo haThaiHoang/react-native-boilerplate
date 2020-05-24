@@ -46,11 +46,7 @@ const Modal = types.model('MobxModalHelper', {
           if (onSuccess) onSuccess(result)
 
           if (successMessage) {
-            Toast.show({
-              type: 'success',
-              text: successMessage,
-              buttonText: 'Ok'
-            })
+            Toast.show(successMessage)
           }
 
           success = true
