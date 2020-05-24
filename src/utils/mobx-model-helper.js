@@ -8,7 +8,7 @@ import Request from '@/utils/request'
 import { navigate } from '@/utils/navigation'
 import ERROR_MESSAGE from '@/constants/error-messages'
 
-const Modal = types.model('MobxModalHelper', {
+const Model = types.model('MobxModelHelper', {
   type: types.maybeNull(types.string),
   error: types.frozen()
 })
@@ -90,6 +90,6 @@ const createTypes = (typeArray) => lodash.reduce(typeArray, (map, value) => {
 }, {})
 
 export {
-  Modal,
+  Model,
   createTypes
 }
