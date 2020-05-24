@@ -1,13 +1,13 @@
 import { types } from 'mobx-state-tree'
 
-import { Modal, createTypes } from '@/utils/mobx-model-helper'
+import { Model, createTypes } from '@/utils/mobx-model-helper'
 import { login } from '@/api/auth'
 
 const TYPES = createTypes([
   'LOGIN'
 ])
 
-const AuthStore = Modal.named('AuthStore')
+const AuthStore = Model.named('AuthStore')
   .props({
     loggedIn: types.boolean
   })

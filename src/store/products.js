@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree'
 
-import { Modal, createTypes } from '@/utils/mobx-model-helper'
+import { Model, createTypes } from '@/utils/mobx-model-helper'
 import { getProducts } from '@/api/products'
 
 const TYPES = createTypes([
@@ -15,7 +15,7 @@ const Product = types.model('Product')
     description: types.maybeNull(types.string)
   })
 
-const ProductsStore = Modal.named('ProductsStore')
+const ProductsStore = Model.named('ProductsStore')
   .props({
     products: types.model({
       items: types.array(Product),
