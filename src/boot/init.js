@@ -26,6 +26,10 @@ class Init extends Component {
     authStore: PropTypes.object
   }
 
+  state = {
+    inited: false
+  }
+
   async componentDidMount() {
     const { authStore } = this.props
 
@@ -36,13 +40,18 @@ class Init extends Component {
       Request.setAccessToken(token)
     }
 
+    this.setState({ inited: true })
+
     setTimeout(() => {
       SplashScreen.hide()
     }, 200)
   }
 
   render() {
-    return null
+    const { children } = this.props
+    const { inited } = this.state
+
+    return inited ? children : null
   }
 }
 
