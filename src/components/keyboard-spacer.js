@@ -8,7 +8,6 @@ import {
   Platform,
   StyleSheet
 } from 'react-native'
-
 import { Dimensions } from '@/theme'
 
 const styles = StyleSheet.create({

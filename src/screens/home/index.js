@@ -4,10 +4,14 @@ import StyleSheet from 'react-native-extended-stylesheet'
 
 import Screen from '@/components/screen'
 import Toolbar from '@/components/toolbar'
+import Container from '@/components/container'
 import Button from '@/components/button'
 import { navigate } from '@/utils/navigation'
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 15
+  },
   list: {
     padding: 15
   },
@@ -31,17 +35,19 @@ export default () => {
   return (
     <Screen>
       <Toolbar title="Components" />
-      <View style={styles.list}>
-        {items.map((item, index) => (
-          <Button
-            key={index}
-            style={StyleSheet.child(styles, 'item', index, items.length)}
-            onPress={() => navigate(item.to)}
-          >
-            {item.name}
-          </Button>
-        ))}
-      </View>
+      <Container style={styles.container}>
+        <View style={styles.list}>
+          {items.map((item, index) => (
+            <Button
+              key={index}
+              style={StyleSheet.child(styles, 'item', index, items.length)}
+              onPress={() => navigate(item.to)}
+            >
+              {item.name}
+            </Button>
+          ))}
+        </View>
+      </Container>
     </Screen>
   )
 }

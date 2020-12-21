@@ -20,7 +20,6 @@ import ItemDetails from '@/screens/list/item-details-screen'
 // List
 import Settings from '@/screens/settings'
 
-
 const Stack = createStackNavigator()
 
 @inject((stores) => ({

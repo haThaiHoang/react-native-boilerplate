@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 const NoDataView = ({ inverted, style }) => (
   <View style={[styles.box, inverted && styles.inverted, style]}>
     <Icon name="alert" style={styles.icon} />
-    <Typography large bold>データなし</Typography>
+    <Typography large bold>No Data</Typography>
   </View>
 )
 NoDataView.propTypes = {
