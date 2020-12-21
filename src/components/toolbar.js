@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { Icon } from 'native-base'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { Colors, Dimensions } from '@/theme'
@@ -65,10 +64,10 @@ const Toolbar = ({ title, back, actionButtons = [] }) => (
             style={styles.actionButton}
             onPress={() => goBack()}
           >
-            <Icon
-              style={styles.actionButtonIcon}
-              name="arrow-back"
-            />
+            {/* <Icon */}
+            {/*  style={styles.actionButtonIcon} */}
+            {/*  name="arrow-back" */}
+            {/* /> */}
           </TouchableOpacity>
         )}
       </View>
@@ -81,11 +80,11 @@ const Toolbar = ({ title, back, actionButtons = [] }) => (
             style={styles.actionButton}
             onPress={button.onPress}
           >
-            <Icon
-              type={button.iconType}
-              style={styles.actionButtonIcon}
-              name={button.icon}
-            />
+            {/* <Icon */}
+            {/*  type={button.iconType} */}
+            {/*  style={styles.actionButtonIcon} */}
+            {/*  name={button.icon} */}
+            {/* /> */}
           </TouchableOpacity>
         ))}
       </View>

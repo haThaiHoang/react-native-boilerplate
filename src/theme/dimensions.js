@@ -1,22 +1,23 @@
 import { Platform, Dimensions } from 'react-native'
-import ExtraDimensions from 'react-native-extra-dimensions-android'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
-let WIDTH
-let HEIGHT
+let width
+let height
 
 if (Platform.OS === 'android') {
-  WIDTH = ExtraDimensions.getRealWindowWidth()
-  HEIGHT = ExtraDimensions.getRealWindowHeight() - ExtraDimensions.getSoftMenuBarHeight()
+  width = Dimensions.get('window').width
+  height = Dimensions.get('window').height + getStatusBarHeight()
 } else {
-  WIDTH = Dimensions.get('window').width
-  HEIGHT = Dimensions.get('window').height
+  width = Dimensions.get('window').width
+  height = Dimensions.get('window').height
 }
 
-export const SCREEN_WIDTH = WIDTH
-export const SCREEN_HEIGHT = HEIGHT
+export const IS_EXTEND_SCREEN = height / width > 1.8
+export const SCREEN_WIDTH = width
+export const SCREEN_HEIGHT = height
 export const STATUS_BAR_HEIGHT = getStatusBarHeight()
 export const TOOL_BAR_HEIGHT = 55
-export const BOTTOM_BAR_HEIGHT = 50
+export const TAB_BAR_HEIGHT = 50
 export const IPHONEX_BOTTOM_HEIGHT = getBottomSpace()
+export const BOTTOM_BAR_HEIGHT = 55 + IPHONEX_BOTTOM_HEIGHT
