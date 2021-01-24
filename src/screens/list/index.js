@@ -59,6 +59,7 @@ class List extends Component {
         url={item.avatar}
       />
       <View style={styles.infoBox}>
+        <Text>ID: {item.id}</Text>
         <Text>Name: {item.name}</Text>
         <Text>Description: {item.description}</Text>
       </View>
@@ -70,9 +71,11 @@ class List extends Component {
 
     return (
       <FetchableList
+        keyExtractor={(item, index) => index}
         contentContainerStyle={styles.list}
         action={productsStore.getProducts}
         items={productsStore.products.items}
+        page={productsStore.products.page}
         total={productsStore.products.total}
         renderItem={this._renderItem}
       />

@@ -1,11 +1,11 @@
 import { types } from 'mobx-state-tree'
 
-import { Model, createTypes } from '@/utils/mobx-model-helper'
+import { Model } from '@/utils/mobx-model-helper'
 import { getProducts } from '@/api/products'
 
-const TYPES = createTypes([
-  'GET_PRODUCTS'
-])
+const TYPES = {
+  GET_PRODUCTS: 1
+}
 
 const Product = types.model('Product')
   .props({
@@ -19,11 +19,12 @@ const ProductsStore = Model.named('ProductsStore')
   .props({
     products: types.model({
       items: types.array(Product),
+      page: types.number,
       total: types.number
     })
   })
   .actions((self) => ({
-    getProducts({ concat, ...payload }) {
+    getProducts(payload, { page, concat }) {
       return self.request({
         type: TYPES.GET_PRODUCTS,
         api: getProducts,
@@ -31,6 +32,7 @@ const ProductsStore = Model.named('ProductsStore')
         onSuccess: (result) => {
           self.products = {
             items: concat ? self.products.items.concat(result.products) : result.products,
+            page,
             total: result.total
           }
         }
@@ -44,6 +46,7 @@ export {
 export default ProductsStore.create({
   products: {
     item: [],
+    page: 0,
     total: 0
   }
 })

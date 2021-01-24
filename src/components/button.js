@@ -17,7 +17,7 @@ const getStyles = memoizeOne((type, size, disabled) => {
   let container = {
     backgroundColor: Colors.PRIMARY,
     height: 35,
-    borderRadius: 18,
+    borderRadius: 4,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

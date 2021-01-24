@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react'
-import { FlatList, View, Animated, ActivityIndicator, StyleSheet, RefreshControl } from 'react-native'
+import { FlatList, View, ActivityIndicator, StyleSheet, RefreshControl } from 'react-native'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 
-import Config from '@/configs'
+import Configs from '@/configs'
 import Loading from '@/components/loading'
 import NoDataView from '@/components/no-data-view'
-import Misc from '@/utils/misc'
 
 const styles = StyleSheet.create({
   footerBox: {
@@ -15,73 +14,57 @@ const styles = StyleSheet.create({
   }
 })
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
-
 @observer
 class FetchableList extends PureComponent {
   static propTypes = {
-    action: PropTypes.func,
-    renderItem: PropTypes.func,
-    innerRef: PropTypes.func,
-    onInit: PropTypes.func,
-    onRefresh: PropTypes.func,
-    onFetched: PropTypes.func,
-    keyExtractor: PropTypes.func,
+    renderItem: PropTypes.func.isRequired,
+    keyExtractor: PropTypes.func.isRequired,
+    action: PropTypes.func.isRequired,
     payload: PropTypes.object,
-    defaultNewPayload: PropTypes.object,
-    items: PropTypes.array,
-    total: PropTypes.number,
+    items: PropTypes.array.isRequired,
+    total: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
+    onFetched: PropTypes.func,
     progressViewOffset: PropTypes.number,
     numColumns: PropTypes.number,
     animated: PropTypes.bool
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      initialing: true,
-      refreshing: false,
-      loadingMore: false,
-      currentPage: 0,
-      newPayload: props.defaultNewPayload || {}
-    }
-
-    this._preventReadchedFetchCurrentPage = 0
+  state = {
+    initialing: true,
+    refreshing: false,
+    loadingMore: false,
+    newPayload: {}
   }
 
-  componentDidMount() {
-    this._fetchData(() => {
-      this.setState({
-        initialing: false
-      })
+  async componentDidMount() {
+    await this._fetchData(0)
+
+    this.setState({
+      initialing: false
     })
   }
 
-  _fetchData = async (onDone) => {
-    const { action, payload, onInit, onRefresh, onFetched } = this.props
-    const { newPayload, initialing, refreshing } = this.state
+  _fetchData = async (page, concat) => {
+    const { action, onFetched, payload } = this.props
+    const { newPayload } = this.state
 
-    if (onInit && initialing) await onInit()
-    if (onRefresh && !initialing && refreshing) await onRefresh()
     const result = await action({
-      ...newPayload,
+      offset: (page) * Configs.PAGINATION_PAGE_SIZE,
+      limit: Configs.PAGINATION_PAGE_SIZE,
       ...payload,
-      offset: 0,
-      limit: Config.PAGINATION_PAGE_SIZE
-    })
+      ...newPayload
+    }, { page, concat })
 
-    if (onFetched) onFetched(result, initialing)
-    if (onDone) onDone()
+    if (onFetched) {
+      onFetched(result, { page })
+    }
   }
 
-  fetchDataWithNewPayload = (newPayload = {}) => {
+  fetchDataWithNewPayload = async (newPayload = {}) => {
     this.state.newPayload = newPayload
-    this._fetchData(() => {
-      this.setState({
-        currentPage: 0
-      })
-    })
+
+    await this._fetchData(0)
   }
 
   scrollToOffset = (params) => {
@@ -96,54 +79,33 @@ class FetchableList extends PureComponent {
     }
   }
 
-  _onRefresh = () => {
-    this.setState({
-      refreshing: true
-    }, () => {
-      this._fetchData(() => {
-        this.setState({
-          refreshing: false,
-          currentPage: 0
-        })
-      })
-    })
+  _onRefresh = async () => {
+    this.setState({ refreshing: true })
+
+    await this._fetchData(0)
+
+    this.setState({ refreshing: false })
   }
 
   _onEndReached = async () => {
-    const { action, payload, items, total, onFetched } = this.props
-    const { currentPage, newPayload } = this.state
+    const { items, total, page } = this.props
+    const { loadingMore } = this.state
 
-    if (items.length < total && !this._isReachedFetching) {
-      this._isReachedFetching = true
-
+    if (total > items.length && !loadingMore) {
       this.setState({
         loadingMore: true
       })
 
-      const result = await action({
-        ...newPayload,
-        ...payload,
-        concat: true,
-        offset: Config.PAGINATION_PAGE_SIZE * (currentPage + 1),
-        limit: Config.PAGINATION_PAGE_SIZE
-      })
+      await this._fetchData(page + 1, true)
 
       this.setState({
-        currentPage: result.success ? currentPage + 1 : currentPage,
         loadingMore: false
       })
-
-      this._isReachedFetching = false
-      if (onFetched) onFetched(result)
     }
   }
 
   _renderItem = ({ item, index }) => {
     const { renderItem } = this.props
-
-    if (item.empty) {
-      return <View style={{ flex: 1 }} />
-    }
 
     return renderItem({ item, index })
   }
@@ -167,26 +129,13 @@ class FetchableList extends PureComponent {
       total,
       numColumns,
       animated,
-      innerRef,
-      onRefresh,
-      keyExtractor,
       progressViewOffset,
       ...props
     } = this.props
     const { initialing, refreshing } = this.state
 
-    let data = []
-
-    if (!initialing) {
-      data = numColumns > 1
-        ? Misc.balanceCollumnFlatListData(items, numColumns)
-        : items
-    }
-
-    const FlatListComponent = animated ? AnimatedFlatList : FlatList
-
     return (
-      <FlatListComponent
+      <FlatList
         {...props}
         refreshControl={(
           <RefreshControl
@@ -201,9 +150,7 @@ class FetchableList extends PureComponent {
         onEndReached={this._onEndReached}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={this._renderFooter}
-        keyExtractor={keyExtractor || ((row, index) => index.toString())}
-        data={data}
-        extraData={props.extraData || data.length}
+        data={items}
         renderItem={this._renderItem}
       />
     )

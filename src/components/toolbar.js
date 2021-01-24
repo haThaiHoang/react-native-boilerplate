@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { Colors, Dimensions } from '@/theme'
+import Typography from '@/components/typography'
 import { goBack } from '@/utils/navigation'
 
 const styles = StyleSheet.create({
@@ -51,6 +52,10 @@ const styles = StyleSheet.create({
   actionButtonIcon: {
     color: 'white',
     fontSize: 24
+  },
+  backButtonText: {
+    color: 'white',
+    fontSize: 12
   }
 })
 
@@ -64,10 +69,9 @@ const Toolbar = ({ title, back, actionButtons = [] }) => (
             style={styles.actionButton}
             onPress={() => goBack()}
           >
-            {/* <Icon */}
-            {/*  style={styles.actionButtonIcon} */}
-            {/*  name="arrow-back" */}
-            {/* /> */}
+            <Typography style={styles.backButtonText}>
+              Back
+            </Typography>
           </TouchableOpacity>
         )}
       </View>

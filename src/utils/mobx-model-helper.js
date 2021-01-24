@@ -1,5 +1,4 @@
-import { types, flow, getSnapshot, applySnapshot } from 'mobx-state-tree'
-import lodash from 'lodash'
+import { types, flow, getSnapshot, applySnapshot, destroy } from 'mobx-state-tree'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import Toast from '@/components/toast'
@@ -9,7 +8,7 @@ import { navigate } from '@/utils/navigation'
 import ERROR_MESSAGE from '@/constants/error-messages'
 
 const Model = types.model('MobxModelHelper', {
-  type: types.maybeNull(types.string),
+  type: types.maybeNull(types.number),
   error: types.frozen()
 })
   .actions((self) => ({
@@ -19,6 +18,10 @@ const Model = types.model('MobxModelHelper', {
 
     clear() {
       applySnapshot(self, self.INIT_VALUES)
+    },
+
+    remove(item) {
+      destroy(item)
     },
 
     request: flow(function* ({
@@ -53,12 +56,13 @@ const Model = types.model('MobxModelHelper', {
           data = result
         }
       } catch (e) {
-        const error = yield Misc.getErrorJsonBody(e)
+        const error = (yield Misc.getErrorJsonBody(e)) || e
         self.error = error
+        data = error
         // eslint-disable-next-line no-console
         console.warn(error)
 
-        if (error.messageCode === 'TOKEN_INVALID') {
+        if (['PERMISSION_DENIED', 'TOKEN_INVALID', 'TOKEN_EXPIRED'].includes(error.statusText)) {
           Request.removeAccessToken()
           yield AsyncStorage.removeItem('ACCESS_TOKEN')
           navigate('Login')
@@ -69,11 +73,18 @@ const Model = types.model('MobxModelHelper', {
         if (onError) onError(e)
 
         if (!disabledErrorMessage) {
-          Toast.error(
-            (handleError && (ERROR_MESSAGE[handleError(error)] || handleError(error)))
-            || (ERROR_MESSAGE[error.messageCode] || error.messageCode)
-            || error.message
-          )
+          if (handleError) {
+            const handledError = handleError(error)
+
+            if (handledError) {
+              Toast.error(ERROR_MESSAGE[handledError] || handledError)
+            }
+          } else {
+            Toast.error(
+              (ERROR_MESSAGE[error.statusText] || error.statusText)
+              || error.message
+            )
+          }
         }
       }
 
@@ -83,13 +94,6 @@ const Model = types.model('MobxModelHelper', {
     })
   }))
 
-const createTypes = (typeArray) => lodash.reduce(typeArray, (map, value) => {
-  map[value] = value
-
-  return map
-}, {})
-
 export {
-  Model,
-  createTypes
+  Model
 }
