@@ -31,13 +31,13 @@ class RootNavigator extends Component {
     authStore: PropTypes.object
   }
 
-  _renderAuthRoutes = () => (
+  _renderPublicRoutes = () => (
     <>
       <Stack.Screen name="Login" component={Login} options={screenOptions.fade} />
     </>
   )
 
-  _renderMainRoutes = () => (
+  _renderPrivateRoutes = () => (
     <>
       <Stack.Screen name="Home" component={Home} options={screenOptions.fade} />
       <Stack.Screen name="List" component={List} options={screenOptions.modal} />
@@ -50,15 +50,14 @@ class RootNavigator extends Component {
     const { authStore } = this.props
 
     return (
-      <NavigationContainer ref={(ref) => setTopLevelNavigator(ref)}>
+      <NavigationContainer
+        ref={(ref) => setTopLevelNavigator(ref)}
+      >
         <Stack.Navigator
           headerMode="none"
-          initialRouteName="Splash"
-          screenOptions={{
-            gestureEnabled: true
-          }}
+          screenOptions={{ gestureEnabled: true }}
         >
-          {authStore.loggedIn ? this._renderMainRoutes() : this._renderAuthRoutes()}
+          {authStore.loggedIn ? this._renderPrivateRoutes() : this._renderPublicRoutes()}
         </Stack.Navigator>
       </NavigationContainer>
     )
