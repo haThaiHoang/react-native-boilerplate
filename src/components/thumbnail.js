@@ -11,7 +11,7 @@ const Thumbnail = ({ url, size, rounded, style, ...props }) => (
       height: size || 40,
       borderRadius: rounded ? (size || 40) / 2 : 0
     }, style]}
-    source={url ? { uri: url } : Images.AVATAR_PLACEHOLDER}
+    source={url ? { uri: url } : Images.IMAGE_PLACEHOLDER}
     {...props}
   />
 )

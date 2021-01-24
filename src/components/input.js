@@ -4,10 +4,6 @@ import { TextInput, View } from 'react-native'
 import memoizeOne from 'memoize-one'
 import lodash from 'lodash'
 
-import Typography from '@/components/typography'
-import Touchable from '@/components/touchable'
-import { Colors } from '@/theme'
-
 const getStyles = memoizeOne((type) => {
   let container = {
     backgroundColor: 'white',
@@ -21,10 +17,6 @@ const getStyles = memoizeOne((type) => {
     height: 36,
     fontSize: 14,
     flex: 1
-  }
-
-  const rightButton = {
-
   }
 
   if (type === 'border') {
@@ -44,8 +36,7 @@ const getStyles = memoizeOne((type) => {
 
   return {
     container,
-    input,
-    rightButton
+    input
   }
 })
 
@@ -69,7 +60,7 @@ export default class Input extends Component {
   }
 
   render() {
-    const { field, form, onChange, style, type, rightButton, ...props } = this.props
+    const { field, form, onChange, style, type, ...props } = this.props
     const styles = getStyles(type)
 
     return (
@@ -81,14 +72,6 @@ export default class Input extends Component {
           onChangeText={this._handle('onChange')}
           onBlur={this._handle('onBlur')}
         />
-        {rightButton && (
-          <Touchable
-            style={styles.rightButton}
-            onPress={rightButton.onPress}
-          >
-            <Typography small style={{ color: Colors.BLUE }}>{rightButton.label}</Typography>
-          </Touchable>
-        )}
       </View>
     )
   }
