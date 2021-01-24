@@ -26,8 +26,11 @@ class FetchableList extends PureComponent {
     page: PropTypes.number.isRequired,
     onFetched: PropTypes.func,
     progressViewOffset: PropTypes.number,
-    numColumns: PropTypes.number,
-    animated: PropTypes.bool
+    showsVerticalScrollIndicator: PropTypes.bool
+  }
+
+  static defaultProps = {
+    showsVerticalScrollIndicator: false
   }
 
   state = {
@@ -45,21 +48,17 @@ class FetchableList extends PureComponent {
     })
   }
 
+  // Call outside the component using ref
   fetchDataWithNewPayload = async (newPayload = {}) => {
     this.state.newPayload = newPayload
 
     await this._fetchData(0)
   }
 
+  // Call outside the component using ref
   scrollToOffset = (params) => {
-    const { animated } = this.props
-
     if (this._flatListComponent) {
-      if (animated) {
-        this._flatListComponent.getNode().scrollToOffset(params)
-      } else {
-        this._flatListComponent.scrollToOffset(params)
-      }
+      this._flatListComponent.scrollToOffset(params)
     }
   }
 
@@ -127,8 +126,6 @@ class FetchableList extends PureComponent {
       action,
       payload,
       total,
-      numColumns,
-      animated,
       progressViewOffset,
       ...props
     } = this.props
@@ -146,9 +143,7 @@ class FetchableList extends PureComponent {
         )}
         ref={(ref) => { this._flatListComponent = ref }}
         ListEmptyComponent={initialing ? Loading : () => <NoDataView inverted={props.inverted} />}
-        numColumns={numColumns}
         onEndReached={this._onEndReached}
-        showsVerticalScrollIndicator={false}
         ListFooterComponent={this._renderFooter}
         data={items}
         renderItem={this._renderItem}

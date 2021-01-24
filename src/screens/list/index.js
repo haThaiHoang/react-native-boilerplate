@@ -71,7 +71,8 @@ class List extends Component {
 
     return (
       <FetchableList
-        keyExtractor={(item, index) => index}
+        ref={(ref) => { this._fetchableList = ref }}
+        keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={styles.list}
         action={productsStore.getProducts}
         items={productsStore.products.items}
