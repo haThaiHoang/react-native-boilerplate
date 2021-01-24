@@ -45,22 +45,6 @@ class FetchableList extends PureComponent {
     })
   }
 
-  _fetchData = async (page, concat) => {
-    const { action, onFetched, payload } = this.props
-    const { newPayload } = this.state
-
-    const result = await action({
-      offset: (page) * Configs.PAGINATION_PAGE_SIZE,
-      limit: Configs.PAGINATION_PAGE_SIZE,
-      ...payload,
-      ...newPayload
-    }, { page, concat })
-
-    if (onFetched) {
-      onFetched(result, { page })
-    }
-  }
-
   fetchDataWithNewPayload = async (newPayload = {}) => {
     this.state.newPayload = newPayload
 
@@ -76,6 +60,22 @@ class FetchableList extends PureComponent {
       } else {
         this._flatListComponent.scrollToOffset(params)
       }
+    }
+  }
+
+  _fetchData = async (page, concat) => {
+    const { action, onFetched, payload } = this.props
+    const { newPayload } = this.state
+
+    const result = await action({
+      offset: (page) * Configs.PAGINATION_PAGE_SIZE, // Edit this param base on your BE pagination config
+      limit: Configs.PAGINATION_PAGE_SIZE, // Edit this param base on your BE pagination config
+      ...payload,
+      ...newPayload
+    }, { page, concat })
+
+    if (onFetched) {
+      onFetched(result, { page })
     }
   }
 
