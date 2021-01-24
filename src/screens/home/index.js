@@ -1,5 +1,4 @@
 import React from 'react'
-import { View } from 'react-native'
 import StyleSheet from 'react-native-extended-stylesheet'
 
 import Screen from '@/components/screen'
@@ -36,17 +35,15 @@ export default () => {
     <Screen>
       <Toolbar title="Components" />
       <Container style={styles.container}>
-        <View style={styles.list}>
-          {items.map((item, index) => (
-            <Button
-              key={index}
-              style={StyleSheet.child(styles, 'item', index, items.length)}
-              onPress={() => navigate(item.to)}
-            >
-              {item.name}
-            </Button>
-          ))}
-        </View>
+        {items.map((item, index) => (
+          <Button
+            key={index}
+            style={StyleSheet.child(styles, 'item', index, items.length)}
+            onPress={() => navigate(item.to)}
+          >
+            {item.name}
+          </Button>
+        ))}
       </Container>
     </Screen>
   )
