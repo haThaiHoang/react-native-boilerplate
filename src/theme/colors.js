@@ -1,5 +1,6 @@
 import tinycolor from 'tinycolor2'
 
+// Color utils
 export const darken = (color: string, value: number) => tinycolor(color).darken(value).toString()
 export const lighten = (color: string, value: number) => tinycolor(color).lighten(value).toString()
 export const isLight = (color: string) => tinycolor(color).isLight()
