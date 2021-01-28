@@ -7,18 +7,11 @@ import { inject, observer } from 'mobx-react'
 import { setTopLevelNavigator } from '@/utils/navigation'
 import screenOptions from '@/navigators/screen-options'
 
-// Auth
 import Login from '@/screens/auth/login'
-
-// Home
 import Home from '@/screens/home'
-
-// List
+import Components from '@/screens/components'
 import List from '@/screens/list'
 import ItemDetails from '@/screens/list/item-details-screen'
-
-// List
-import Settings from '@/screens/settings'
 
 const Stack = createStackNavigator()
 
@@ -40,9 +33,9 @@ class RootNavigator extends Component {
   _renderPrivateRoutes = () => (
     <>
       <Stack.Screen name="Home" component={Home} options={screenOptions.fade} />
+      <Stack.Screen name="Components" component={Components} options={screenOptions.modal} />
       <Stack.Screen name="List" component={List} options={screenOptions.modal} />
       <Stack.Screen name="ItemDetails" component={ItemDetails} options={screenOptions.card} />
-      <Stack.Screen name="Settings" component={Settings} options={screenOptions.modal} />
     </>
   )
 

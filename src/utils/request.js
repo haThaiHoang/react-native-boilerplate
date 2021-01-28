@@ -1,28 +1,10 @@
 import lodash from 'lodash'
 
-// eslint-disable-next-line no-underscore-dangle
-let _requests = 0
-// eslint-disable-next-line no-underscore-dangle
-let _interceptors = {}
 let accessToken = null
-
-function triggerInterceptors(event, data = {}) {
-  lodash.forEach(_interceptors, (interceptor) => {
-    interceptor(event, data)
-  })
-}
 
 class Request {
   static create(options) {
     return new Request(options)
-  }
-
-  static registerInterceptor(name, interceptor) {
-    _interceptors[name] = interceptor
-  }
-
-  static unregisterInterceptor(name) {
-    _interceptors = lodash.omit(_interceptors, name)
   }
 
   static setAccessToken(token) {
@@ -33,10 +15,6 @@ class Request {
     return accessToken
   }
 
-  static hasAccessToken() {
-    return !!accessToken
-  }
-
   static removeAccessToken() {
     accessToken = null
   }
@@ -45,40 +23,26 @@ class Request {
     this._options = options
   }
 
-  get(url, params) {
-    return this.request({ method: 'GET', url, params })
+  get(url, params, headers) {
+    return this._request({ method: 'GET', url, params, headers })
   }
 
-  post(url, data, params) {
-    return this.request({ method: 'POST', url, params, data })
+  post(url, data, params, headers) {
+    return this._request({ method: 'POST', url, params, data, headers })
   }
 
-  put(url, data, params) {
-    return this.request({ method: 'PUT', url, params, data })
+  put(url, data, params, headers) {
+    return this._request({ method: 'PUT', url, params, data, headers })
   }
 
-  delete(url, data, params) {
-    return this.request({ method: 'DELETE', url, params, data })
-  }
-
-  async request(...args) {
-    _requests += 1
-
-    triggerInterceptors('request:start', { requests: _requests })
-
-    try {
-      return await this._request(...args)
-    } finally {
-      triggerInterceptors('request:done', { requests: _requests })
-
-      _requests -= 1
-    }
+  delete(url, data, params, headers) {
+    return this._request({ method: 'DELETE', url, params, data, headers })
   }
 
   async _request(requestOptions) {
-    const { method = 'GET', data = null } = requestOptions
-    // eslint-disable-next-line
-    let { url, params = null } = requestOptions
+    const { method = 'GET', data = null, headers } = requestOptions
+    let { url } = requestOptions
+    const { params = null } = requestOptions
 
     url = this._options.endpoint + url
 
@@ -101,6 +65,8 @@ class Request {
       options.headers.Authorization = this._authorization
     }
 
+    options.headers = lodash.merge(options.headers, headers)
+
     if (['POST', 'PUT', 'DELETE'].includes(method)) {
       if (data) {
         const serializable = lodash.isPlainObject(data) || lodash.isArray(data)
@@ -119,26 +85,20 @@ class Request {
       }
     }
 
-    // eslint-disable-next-line
-    console.log('%c --API REQUEST-- ', 'background: #222; color: #bada55', url, options)
-
     const res = await fetch(url, options)
 
     if (!res.ok) {
-      triggerInterceptors('response:error', { response: res })
       throw res
     }
 
-    const text = await res.text()
-
     try {
+      const text = await res.text()
       const responseData = text !== '' ? JSON.parse(text) : ''
 
       return responseData
     } catch (error) {
-      triggerInterceptors('response:error.json', { error, response: res })
       /* eslint-disable no-console */
-      console.error('[request] parse JSON response error:', method, url, data, params, text, error)
+      console.error('[request] parse JSON response error:', method, url, data, params, error)
       throw error
     }
   }

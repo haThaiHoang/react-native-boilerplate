@@ -1,5 +1,8 @@
-import React from 'react'
-import StyleSheet from 'react-native-extended-stylesheet'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { StyleSheet } from 'react-native'
+import { inject } from 'mobx-react'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import Screen from '@/components/screen'
 import Toolbar from '@/components/toolbar'
@@ -16,35 +19,45 @@ const styles = StyleSheet.create({
   },
   item: {
     marginBottom: 10
-  },
-  'item:last-child': {
-    marginBottom: 0
   }
 })
 
-export default () => {
-  const items = [{
-    name: 'List',
-    to: 'List'
-  }, {
-    name: 'Settings',
-    to: 'Settings'
-  }]
+@inject((stores) => ({
+  authStore: stores.auth
+}))
+class Home extends Component {
+  static propTypes = {
+    authStore: PropTypes.object
+  }
 
-  return (
-    <Screen>
-      <Toolbar title="Components" />
-      <Container style={styles.container}>
-        {items.map((item, index) => (
+  _onLogOut = async () => {
+    const { authStore } = this.props
+
+    await AsyncStorage.removeItem('ACCESS_TOKEN')
+    authStore.setLoggedIn(false)
+  }
+
+  render() {
+    return (
+      <Screen>
+        <Toolbar title="Home" />
+        <Container style={styles.container}>
           <Button
-            key={index}
-            style={StyleSheet.child(styles, 'item', index, items.length)}
-            onPress={() => navigate(item.to)}
+            style={styles.item}
+            onPress={() => navigate('Components')}
           >
-            {item.name}
+            Components
           </Button>
-        ))}
-      </Container>
-    </Screen>
-  )
+          <Button
+            style={styles.item}
+            onPress={this._onLogOut}
+          >
+            Logout
+          </Button>
+        </Container>
+      </Screen>
+    )
+  }
 }
+
+export default Home
