@@ -7,17 +7,22 @@ export const authApi = baseRestApi.injectEndpoints({
       query: () => {
         return {
           method: 'get',
-          url: '/api/v1/makers/me',
+          url: '/api/v1/me',
           toastError: false
         }
       },
     }),
-    loginWithPassword: builder.mutation<{ user: TUser } | { error: string }, { email: string, password: string }>({
+    login: builder.mutation<{ user: TUser } | { error: string }, { email: string, password: string }>({
       query: (payload) => {
         return {
           method: 'post',
-          url: '/api/v1/makers/login_with_password',
+          url: '/api/v1/login',
           data: payload,
+          mockData: {
+            data: {
+              accessToken: 'ABC123'
+            }
+          }
         }
       },
     }),

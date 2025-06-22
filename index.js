@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { Appearance, StatusBar } from 'react-native'
 import 'moment/locale/vi'
 
-import i18n from '@pamo-fe/locale'
+import i18n from './src/locale'
 import Bootstrap from '@/boot'
 
 Appearance.setColorScheme('light')

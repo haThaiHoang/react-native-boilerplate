@@ -1,4 +1,4 @@
-import { HOME_SCREEN } from '@/constants'
+import { HISTORY_SCREEN } from '@/constants'
 import { Text } from '@/components'
 import { Screen } from '@/components'
 
@@ -6,18 +6,18 @@ const ScreenComponent = () => {
   return (
     <Screen
       topBarProps={{
-        title: "Home",
+        title: "History",
       }}
       bottomTabsProps={{
-        activeIndex: 0
+        activeIndex: 1
       }}
       scrollViewKeyboardShouldPersistTaps="always"
     >
-      <Text>This is Home Screen</Text>
+      <Text>This is History Screen</Text>
     </Screen>
   )
 }
 
-ScreenComponent.displayName = HOME_SCREEN
+ScreenComponent.displayName = HISTORY_SCREEN
 
 export default ScreenComponent

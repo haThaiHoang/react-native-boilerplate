@@ -8,6 +8,9 @@ type TProps = {
   alignItems?: 'center' | 'flex-start' | 'flex-end'
   flexDirection?: 'column' | 'column-reverse' | 'row' | 'row-reverse'
   flex?: number
+  padding?: number,
+  paddingHorizontal?: number,
+  paddingVertical?: number,
   gap?: number
 }
 
@@ -19,6 +22,9 @@ const Box = (props: TProps) => {
     alignItems,
     flexDirection,
     flex,
+    padding,
+    paddingHorizontal,
+    paddingVertical,
     gap,
   } = props
 
@@ -29,6 +35,9 @@ const Box = (props: TProps) => {
         justifyContent,
         alignItems,
         flexDirection,
+        padding,
+        paddingHorizontal,
+        paddingVertical,
         gap,
       }, style]}
     >
